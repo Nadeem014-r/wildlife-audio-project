@@ -7,6 +7,6 @@ This project detects animal species from audio recordings using machine learning
 
 Team Members:
 - Nadeem Rashid
-- Harsh Anand
+- Harsh Anand(ceo)
 
 
