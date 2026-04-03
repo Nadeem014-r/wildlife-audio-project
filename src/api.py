@@ -26,8 +26,9 @@ app.add_middleware(
 )
 
 # Load Model Configuration
-device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
-print("Loading model for Inference...")
+# Force CPU to avoid deadlocking the Apple Silicon GPU while the training background process uses it
+device = torch.device('cpu')
+print(f"Loading model for Inference on {device}...")
 model = BirdClassifier(num_classes=NUM_CLASSES)
 model_path = "models/best_model.pth"
 if os.path.exists(model_path):

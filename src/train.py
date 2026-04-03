@@ -31,7 +31,8 @@ def train_model(epochs=3, batch_size=32, fast_dev_run=False):
     
     # Multi-label classification requires BCEWithLogitsLoss
     criterion = nn.BCEWithLogitsLoss()
-    optimizer = optim.Adam(model.parameters(), lr=1e-3)
+    optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
     
     # Setup directories
     os.makedirs("models", exist_ok=True)
@@ -83,6 +84,8 @@ def train_model(epochs=3, batch_size=32, fast_dev_run=False):
         
         avg_train_loss = train_loss / dataset_train_len
         avg_val_loss = val_loss / dataset_val_len
+        
+        scheduler.step()
         
         print(f"Epoch {epoch+1} Summary:")
         print(f"  > Average Train Loss: {avg_train_loss:.4f}")
