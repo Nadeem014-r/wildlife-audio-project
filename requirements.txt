@@ -4,4 +4,7 @@ librosa
 matplotlib
 scikit-learn
 torch
-
+torchvision
+fastapi
+uvicorn
+python-multipart
