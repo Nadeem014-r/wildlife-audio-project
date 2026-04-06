@@ -1,5 +1,6 @@
-import argparse
 import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+import argparse
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -31,11 +32,14 @@ def train_model(epochs=3, batch_size=32, fast_dev_run=False):
     
     # Multi-label classification requires BCEWithLogitsLoss
     criterion = nn.BCEWithLogitsLoss()
-    optimizer = optim.Adam(model.parameters(), lr=1e-3)
+    optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
     
     # Setup directories
     os.makedirs("models", exist_ok=True)
     best_loss = float('inf')
+    early_stop_patience = 5
+    patience_counter = 0
     
     # 3. Training Loop
     for epoch in range(epochs):
@@ -50,6 +54,7 @@ def train_model(epochs=3, batch_size=32, fast_dev_run=False):
             outputs = model(inputs)
             loss = criterion(outputs, targets)
             loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
             
             train_loss += loss.item() * inputs.size(0)
@@ -88,12 +93,22 @@ def train_model(epochs=3, batch_size=32, fast_dev_run=False):
         print(f"  > Average Train Loss: {avg_train_loss:.4f}")
         print(f"  > Average Val Loss: {avg_val_loss:.4f}")
         
-        # Save Best Model
+        # Save Best Model & Early Stopping
         if avg_val_loss < best_loss:
             best_loss = avg_val_loss
             model_path = "models/best_model.pth"
             torch.save(model.state_dict(), model_path)
             print(f"⭐️ Saved new best model to {model_path}!")
+            patience_counter = 0
+        else:
+            patience_counter += 1
+            print(f"  > Early stopping counter: {patience_counter}/{early_stop_patience}")
+            if patience_counter >= early_stop_patience:
+                print("🛑 Early stopping triggered. Validation loss hasn't improved.")
+                break
+                
+        # Step the scheduler
+        scheduler.step()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

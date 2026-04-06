@@ -1,4 +1,7 @@
 import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
+
 import io
 import base64
 import torch
@@ -8,6 +11,7 @@ import librosa
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware

@@ -45,6 +45,28 @@ def audio_to_mel_spectrogram(y, sr=32000, n_mels=224, target_len=None):
     S_dB = np.expand_dims(S_dB, axis=0)
     return S_dB
 
+def spec_augment(spec, max_time_mask=25, max_freq_mask=25):
+    """ Apply SpecAugment (Time and Frequency masking) to a spectrogram. """
+    spec_aug = spec.copy()
+    freq_bins = spec_aug.shape[1]
+    time_steps = spec_aug.shape[2]
+    
+    # Frequency Masking
+    num_freq_masks = random.randint(1, 2)
+    for _ in range(num_freq_masks):
+        f_mask = random.randint(0, max_freq_mask)
+        f0 = random.randint(0, max(1, freq_bins - f_mask))
+        spec_aug[0, f0:f0 + f_mask, :] = 0
+
+    # Time Masking
+    num_time_masks = random.randint(1, 2)
+    for _ in range(num_time_masks):
+        t_mask = random.randint(0, max_time_mask)
+        t0 = random.randint(0, max(1, time_steps - t_mask))
+        spec_aug[0, :, t0:t0 + t_mask] = 0
+        
+    return spec_aug
+
 def mix_audio(y1, y2, snr=0.4):
     """Mix two raw audio arrays."""
     max_len = max(len(y1), len(y2))
@@ -86,7 +108,7 @@ class BirdDataset(Dataset):
             y = np.zeros(int(self.sr * self.max_length), dtype=np.float32)
 
         # Audio Mixing Data Augmentation
-        if self.augment and random.random() < 0.3:
+        if self.augment and random.random() < 0.4:
             mix_idx = random.randint(0, len(self.metadata) - 1)
             mix_row = self.metadata.iloc[mix_idx]
             mix_path = os.path.join(self.audio_dir, mix_row['filename'])
@@ -97,14 +119,22 @@ class BirdDataset(Dataset):
                 if sr2 != self.sr:
                     y2 = librosa.resample(y2, orig_sr=sr2, target_sr=self.sr)
                 
-                y = mix_audio(y, y2, snr=0.3)
+                random_snr = random.uniform(0.1, 0.5) # Dynamic mixing ratio
+                y = mix_audio(y, y2, snr=random_snr)
                 if mix_row['primary_label'] in LABEL_TO_ID:
-                    target[LABEL_TO_ID[mix_row['primary_label']]] = 1.0
+                    # Soft labeling: distribute probability based on SNR
+                    orig_target_val = target.max() # 1.0 or 0.0
+                    target *= (1.0 - random_snr)
+                    target[LABEL_TO_ID[mix_row['primary_label']]] += random_snr
             except Exception:
                 pass
                 
         y, target_len = pad_or_truncate_audio(y, self.sr, self.max_length)
         spec = audio_to_mel_spectrogram(y, sr=self.sr, n_mels=224, target_len=target_len)
+        
+        if self.augment and random.random() < 0.5:
+            spec = spec_augment(spec)
+            
         spec_tensor = torch.from_numpy(spec).float()
         
         return spec_tensor, target
