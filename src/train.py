@@ -89,6 +89,8 @@ def train_model(epochs=3, batch_size=32, fast_dev_run=False):
         avg_train_loss = train_loss / dataset_train_len
         avg_val_loss = val_loss / dataset_val_len
         
+        scheduler.step()
+        
         print(f"Epoch {epoch+1} Summary:")
         print(f"  > Average Train Loss: {avg_train_loss:.4f}")
         print(f"  > Average Val Loss: {avg_val_loss:.4f}")

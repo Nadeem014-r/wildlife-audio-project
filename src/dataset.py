@@ -41,8 +41,9 @@ def audio_to_mel_spectrogram(y, sr=32000, n_mels=224, target_len=None):
     # Crop if slightly over 224 time steps due to rounding
     S_dB = S_dB[:, :n_mels]
     
-    # Shape: (Channels, Height, Width) -> (1, 224, 224)
+    # Shape: (Channels, Height, Width) -> (3, 224, 224)
     S_dB = np.expand_dims(S_dB, axis=0)
+    S_dB = np.repeat(S_dB, 3, axis=0)
     return S_dB
 
 def spec_augment(spec, max_time_mask=25, max_freq_mask=25):
