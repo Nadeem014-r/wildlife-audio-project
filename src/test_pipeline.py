@@ -1,3 +1,9 @@
+import os
+import pytest
+pytestmark = pytest.mark.skipif(not os.path.exists("data/birdclef-2026/train.csv"), reason="Data not available")
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from src.dataset import get_dataloaders, ID_TO_LABEL
@@ -31,7 +37,7 @@ def test_pipeline():
     plt.colorbar(format='%+2.0f dB')
     plt.title(f"Augmented Spectrogram - {', '.join(active_labels)}")
     plt.tight_layout()
-    output_path = "/Users/harshanand/.gemini/antigravity/brain/4a234e41-83ce-4150-a8e6-3ec97e3801d8/augmented_spectrogram.png"
+    output_path = "augmented_spectrogram.png"
     plt.savefig(output_path)
     plt.close()
     

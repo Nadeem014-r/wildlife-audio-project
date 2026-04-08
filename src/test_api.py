@@ -1,3 +1,7 @@
+import os
+import pytest
+pytestmark = pytest.mark.skipif(not os.path.exists("data/birdclef-2026/train.csv"), reason="Data not available")
+
 import pprint
 from fastapi.testclient import TestClient
 from src.api import app

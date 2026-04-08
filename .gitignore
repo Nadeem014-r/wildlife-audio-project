@@ -1,3 +1,11 @@
 data/
 venv/
+.env
+__pycache__/
+*.pyc
+models/
+.DS_Store
 *.wav
+*.ogg
+frontend/node_modules/
+frontend/dist/
