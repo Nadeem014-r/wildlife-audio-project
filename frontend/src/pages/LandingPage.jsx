@@ -1,11 +1,69 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+async function blobToWav(blob) {
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const arrayBuffer = await blob.arrayBuffer();
+  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+  
+  const numOfChan = audioBuffer.numberOfChannels;
+  const length = audioBuffer.length * numOfChan * 2 + 44;
+  const buffer = new ArrayBuffer(length);
+  const view = new DataView(buffer);
+  const channels = [];
+  let sampleRate = audioBuffer.sampleRate;
+  let pos = 0;
+  
+  function setUint16(data) { view.setUint16(pos, data, true); pos += 2; }
+  function setUint32(data) { view.setUint32(pos, data, true); pos += 4; }
+  
+  setUint32(0x46464952); // "RIFF"
+  setUint32(length - 8); 
+  setUint32(0x45564157); // "WAVE"
+  setUint32(0x20746d66); // "fmt " chunk
+  setUint32(16); 
+  setUint16(1); 
+  setUint16(numOfChan);
+  setUint32(sampleRate);
+  setUint32(sampleRate * 2 * numOfChan);
+  setUint16(numOfChan * 2); 
+  setUint16(16); 
+  setUint32(0x61746164); // "data" chunk
+  setUint32(length - pos - 4); 
+  
+  for(let i=0; i<audioBuffer.numberOfChannels; i++) {
+    channels.push(audioBuffer.getChannelData(i));
+  }
+  
+  let interleaved;
+  if(numOfChan === 2) {
+    interleaved = new Float32Array(audioBuffer.length * numOfChan);
+    for(let i=0, j=0; i < audioBuffer.length; i++) {
+      interleaved[j++] = channels[0][i];
+      interleaved[j++] = channels[1][i];
+    }
+  } else {
+    interleaved = channels[0];
+  }
+  
+  for(let i=0; i<interleaved.length; i++) {
+    let sample = Math.max(-1, Math.min(1, interleaved[i]));
+    view.setInt16(pos, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
+    pos += 2;
+  }
+  
+  return new Blob([buffer], { type: "audio/wav" });
+}
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const fileInputRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const chunksRef = useRef([]);
   
+  const [isRecording, setIsRecording] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState(null);
@@ -61,6 +119,63 @@ export default function LandingPage() {
     }
   };
 
+  const startRecording = async () => {
+    try {
+      setError(null);
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+      chunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunksRef.current.push(e.data);
+      };
+
+      mediaRecorder.onstop = async () => {
+        const webmBlob = new Blob(chunksRef.current, { type: 'audio/webm' });
+        try {
+          const wavBlob = await blobToWav(webmBlob);
+          const file = new File([wavBlob], "recording.wav", { type: "audio/wav" });
+          handleFileUpload(file);
+        } catch (e) {
+          setError("Failed to process microphone audio: " + e.message);
+        }
+        stream.getTracks().forEach(track => track.stop());
+      };
+
+      mediaRecorder.start();
+      setIsRecording(true);
+    } catch (err) {
+      setError("Microphone access denied or unavailable. Please check permissions.");
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  };
+
+  const toggleRecording = () => {
+    if (isRecording) {
+      stopRecording();
+    } else {
+      startRecording();
+    }
+  };
+
+  useEffect(() => {
+    // Automatically trigger actions if coming from TopNavBar
+    if (location.search.includes('action=upload')) {
+        if (fileInputRef.current) fileInputRef.current.click();
+        navigate('/', { replace: true });
+    } else if (location.search.includes('action=record')) {
+        if (!isRecording) startRecording();
+        navigate('/', { replace: true });
+    }
+  }, [location.search, isRecording]);
+
   const onDragOver = (e) => {
     e.preventDefault();
     setIsDragging(true);
@@ -108,37 +223,42 @@ export default function LandingPage() {
                   ))}
               </div>
             </div>
-            <motion.h2 
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="text-white text-3xl font-black uppercase tracking-[0.2em]"
+            {error && (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 flex items-center justify-center gap-3 bg-red-500/10 border border-red-500/20 px-6 py-3 rounded-full text-red-400 font-medium tracking-wide shadow-lg backdrop-blur-md max-w-lg mx-auto"
             >
-              Analyzing Acoustic Signature
-            </motion.h2>
-            <p className="text-[#a3a3a3] mt-4 font-mono text-sm tracking-widest uppercase">Connecting to Local ConvNet Backend...</p>
+              <span className="material-symbols-outlined">error</span>
+              {error}
+            </motion.div>
+          )}
+
+          <motion.div 
+            variants={itemVariants}
+            className="mt-16 text-[#666] text-xs font-medium tracking-[0.2em] uppercase flex items-center justify-center gap-4"
+          >
+            <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#333]"></div>
+            <span>Wildlife Acoustic Model</span>
+            <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#333]"></div>
           </motion.div>
+        </motion.div>
         )}
       </AnimatePresence>
 
       <main className="flex-grow pt-8 px-8 max-w-7xl mx-auto w-full flex flex-col items-center">
-        {error && (
-            <div className="w-full max-w-2xl bg-red-900/50 border border-red-500 text-white p-4 rounded-lg mb-8 text-center text-sm font-medium">
-              🚨 Connection Failed: {error}
-            </div>
-        )}
-
         <motion.section 
           className="w-full flex flex-col items-center text-center mb-24"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={itemVariants} className="mb-8 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#131313] border border-[#1f1f1f] text-[#c6c6c6] text-[0.7rem] font-bold tracking-[0.2em] uppercase">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-            </span>
-            Powered by AI Observation
+          <motion.div variants={itemVariants} className="relative inline-block mb-8">
+            <div className="absolute inset-0 bg-emerald-500/20 blur-[100px] rounded-full z-0"></div>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white text-xs font-semibold tracking-widest uppercase relative z-10 backdrop-blur-sm">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Acoustic Bio-Surveillance
+            </div>
           </motion.div>
           
           <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl font-black text-white hero-glow mb-8 tracking-tighter max-w-5xl">
@@ -173,10 +293,15 @@ export default function LandingPage() {
             <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-3 px-10 py-5 rounded-lg border border-white/30 text-white font-bold text-lg hover:bg-[#131313] transition-colors"
+              onClick={toggleRecording}
+              className={`flex items-center gap-3 px-10 py-5 rounded-lg border text-lg font-bold transition-all ${
+                isRecording 
+                  ? 'bg-red-500/20 border-red-500 text-red-500 shadow-[0_0_30px_rgba(239,68,68,0.2)] animate-[pulse_1s_ease-in-out_infinite_alternate]' 
+                  : 'border-white/30 text-white hover:bg-[#131313]'
+              }`}
             >
-              <span className="material-symbols-outlined" data-icon="mic">mic</span>
-              Record Live
+              <span className="material-symbols-outlined" data-icon="mic" style={isRecording ? {fontVariationSettings: "'FILL' 1"} : {}}>mic</span>
+              {isRecording ? "Stop Recording..." : "Record Live"}
             </motion.button>
           </motion.div>
           
