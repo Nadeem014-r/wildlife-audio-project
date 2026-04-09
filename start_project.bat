@@ -1,17 +1,30 @@
 @echo off
 echo ==============================================
-echo ORNIS WILDLIFE AUDIO SYSTEM - STARTUP SEQUENCE
+echo    ORNIS WILDLIFE AUDIO SYSTEM - STARTUP
 echo ==============================================
 
-echo [1/2] Starting Python FastAPI Backend Engine...
-start cmd /k "uvicorn src.api:app --reload"
+echo.
+echo [1/2] Starting Python FastAPI Backend...
+echo       API will be available at: http://127.0.0.1:8000
+echo.
 
-echo [2/2] Starting React Vite Frontend Service...
-cd frontend
-start cmd /k "npm run dev"
+:: Launch backend in the project root directory (IMPORTANT: uvicorn must run from here)
+start cmd /k "cd /d "%~dp0" && uvicorn src.api:app --reload"
+
+timeout /t 2 /nobreak > nul
+
+echo [2/2] Starting React Vite Frontend...
+echo       App will be available at: http://localhost:5173
+echo.
+
+:: Launch frontend
+start cmd /k "cd /d "%~dp0frontend" && npm run dev"
 
 echo.
-echo All services launched! 
-echo The API is available at http://127.0.0.1:8000
-echo The Database UI is available via Vite.
+echo ============================================
+echo  Both services are starting up!
+echo  Backend : http://127.0.0.1:8000
+echo  Frontend: http://localhost:5173
+echo ============================================
+echo.
 pause

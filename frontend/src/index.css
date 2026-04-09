@@ -2,53 +2,53 @@
 
 @layer base {
   body {
-    background-color: #0e0e0e;
-    color: #e2e2e2;
+    background-color: #fafaf9;
+    color: #1c1917; /* stone-900 */
     font-family: 'Inter', sans-serif;
   }
 }
+
 
 @layer utilities {
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
   .glass-panel {
-    background: rgba(31, 31, 31, 0.4);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
   }
-  .hero-glow {
-    text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+  .hero-shadow {
+    text-shadow: 0 4px 20px rgba(16, 185, 129, 0.1); /* Soft emerald glow */
   }
-  /* Design System 8 specifics */
-  .architectural-void {
-    border: 1px solid #1f1f1f;
-  }
-  .monolith-grid {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  .nature-grid {
+    background-image: radial-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px);
     background-size: 32px 32px;
   }
 }
 
 @layer components {
-  /* Obsidian Mono: Architectural Void styling */
-  .obsidian-card {
-    background: #131313;
-    border: 1px solid #1f1f1f;
+  .nature-card {
+    background: #ffffff;
+    border: 1px solid #f5f5f4;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     transition: all 0.3s ease;
   }
-  .obsidian-card:hover {
-    border-color: #333333;
-    background: #181818;
+  .nature-card:hover {
+    border-color: #e7e5e4;
+    box-shadow: 0 10px 40px rgba(16, 185, 129, 0.08); /* slight emerald shadow */
+    transform: translateY(-2px);
   }
-  .btn-obsidian {
-    background: #1f1f1f;
-    color: #ffffff;
-    border: 1px solid #333333;
+  .btn-nature {
+    background: #ffffff;
+    color: #064e3b; /* emerald-900 */
+    border: 1px solid #e7e5e4;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     transition: all 0.2s ease;
   }
-  .btn-obsidian:hover {
-    background: #ffffff;
-    color: #0e0e0e;
+  .btn-nature:hover {
+    background: #f0fdf4; /* emerald-50 */
+    border-color: #d1fae5; /* emerald-100 */
   }
 }

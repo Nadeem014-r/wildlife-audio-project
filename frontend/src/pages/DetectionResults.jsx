@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useLocation, Link, Navigate } from 'react-router-dom';
-import SideNavBar from '../components/SideNavBar';
+import { useLocation, Link } from 'react-router-dom';
 
 const speciesMap = {
   'rubthr1': { name: 'Ruby-throated Bulbul', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBpy9JlAVXqlwuzW3_-BIuL70qa3rOn4nuyfUou35Aw-RYf-x1bsKt0GLt2c4yB2t-_y63xgsLqBh6TMC5pXSVqoQukMmqKqSgZVvR9O1JUu-aQY3VVbV3AbsW7kHPqDMD0EsiO1OXJY7ua7_xINQb5L12RIk0NbssHPH8eowaXo9U5RNRitqv6jzOX_F2mQJPO98M_qcRLZxnwWDG11rMLel3uwKIKLHAhmUSssXDVRmShNsmNjpVXXxy9rePxTdknsCl6Zk9JjIo' },
@@ -21,259 +20,251 @@ const speciesMap = {
   'bbwduc': { name: 'Black-bellied Whistling-Duck', img: 'https://images.unsplash.com/photo-1549472304-4aff513aedbb?q=80&w=600&auto=format&fit=crop' },
 };
 
+const getSpeciesData = (code) =>
+  speciesMap[code] || { name: code.replace(/[0-9]/g, '').toUpperCase(), img: 'https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=600&auto=format&fit=crop' };
+
+const probBar = {
+  hidden: { width: '0%' },
+  visible: (custom) => ({
+    width: custom,
+    transition: { duration: 1.2, ease: 'easeOut', delay: 0.5 },
+  }),
+};
+
+const fadeUp = {
+  hidden: { y: 24, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.55, ease: 'easeOut' } },
+};
+
+const pageVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+};
+
 export default function DetectionResults() {
   const location = useLocation();
   const data = location.state?.predictionData;
-
-  // Render dummy data entirely for architectural design visually if user arrives on this page raw
   const isMock = !data;
 
-  // Extracted dynamically from FastAPI output!
-  const topPrediction = !isMock && data.predictions.length > 0 ? data.predictions[0] : { species: 'rubthr1', confidence: 0.947 };
-  const predictionsArray = !isMock ? data.predictions : [
-    { species: 'rubthr1', confidence: 0.947 },
-    { species: 'houspa', confidence: 0.031 },
-    { species: 'socfly1', confidence: 0.014 },
-    { species: 'trsowl', confidence: 0.005 }
-  ];
+  const topPrediction = !isMock && data.predictions.length > 0
+    ? data.predictions[0]
+    : { species: 'rubthr1', confidence: 0.947 };
 
-  const specImage = !isMock ? data.spectrogram_image : 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXCJwB1cPMOx_9qG9hRtNqVEH0bc9vGyeY96eCjerKqNSN4vpFJhXLt-dqAogxLhj1vUc5jG-sPHsTzYusQ7DKWifXapGjKIAfrG1NO-IcBDhJtzmvXhqViVyUr52efJClov5O9LlzV88-Ohgw-oGF_EVQBeNXAr-78h3dNjsX5WzupUbjYlznaaIn4BcS27Cg_s5geXaJxUhT9QEwPtCxzTbiJ-5nOeB9HV8X764ZfMnSaml4u9PI9SHNgD6HSTYkTIoZtPZjVaQ';
+  const predictionsArray = !isMock
+    ? data.predictions
+    : [
+        { species: 'rubthr1', confidence: 0.947 },
+        { species: 'houspa', confidence: 0.031 },
+        { species: 'socfly1', confidence: 0.014 },
+        { species: 'trsowl', confidence: 0.005 },
+      ];
 
-  const formatConfidenceString = (confVal) => (confVal * 100).toFixed(1);
+  const specImage = !isMock
+    ? data.spectrogram_image
+    : 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXCJwB1cPMOx_9qG9hRtNqVEH0bc9vGyeY96eCjerKqNSN4vpFJhXLt-dqAogxLhj1vUc5jG-sPHsTzYusQ7DKWifXapGjKIAfrG1NO-IcBDhJtzmvXhqViVyUr52efJClov5O9LlzV88-Ohgw-oGF_EVQBeNXAr-78h3dNjsX5WzupUbjYlznaaIn4BcS27Cg_s5geXaJxUhT9QEwPtCxzTbiJ-5nOeB9HV8X764ZfMnSaml4u9PI9SHNgD6HSTYkTIoZtPZjVaQ';
 
-  // Fallback map getter
-  const getSpeciesData = (code) => speciesMap[code] || { name: code.toUpperCase(), img: 'https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=600&auto=format&fit=crop' };
-  
   const topSpeciesInfo = getSpeciesData(topPrediction.species);
   const topConfidenceNum = (topPrediction.confidence * 100).toFixed(1);
-
-  const pageVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.1 } }
-  };
-
-  const fadeUp = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.6 } }
-  };
-
-  const probBar = {
-    hidden: { width: "0%" },
-    visible: custom => ({
-      width: custom,
-      transition: { duration: 1.2, ease: "easeOut", delay: 0.5 }
-    })
-  };
+  const formatConf = (v) => (v * 100).toFixed(1);
 
   return (
-    <div className="flex min-h-screen pt-20">
-      <SideNavBar />
+    <div className="min-h-screen bg-stone-50 pt-20 relative overflow-hidden">
+      {/* Subtle background decoration */}
+      <div className="absolute top-0 right-0 -mr-40 -mt-40 w-[480px] h-[480px] bg-emerald-100/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 -ml-40 -mb-40 w-[480px] h-[480px] bg-emerald-50/60 rounded-full blur-3xl pointer-events-none" />
 
-      <main className="flex-1 monolith-grid relative bg-[#0e0e0e] overflow-hidden">
-        <motion.div 
-          className="max-w-7xl mx-auto p-12 space-y-12"
-          variants={pageVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {isMock && (
-             <div className="w-full bg-yellow-600/20 text-yellow-500 border border-yellow-600 p-4 rounded-lg text-sm font-medium">
-                Note: Seeing sample data since you navigated here without uploading an audio file.
-             </div>
-          )}
-          
-          <motion.div variants={fadeUp} className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 text-[#c6c6c6] text-[10px] uppercase tracking-[0.2em] mb-4 font-bold">
-                <Link to="/" className="hover:text-white flex items-center gap-1 transition-colors">
-                  <span className="material-symbols-outlined text-[12px]">arrow_back</span>
-                  BACK
-                </Link>
-                <span className="opacity-30">/</span>
-                <span className="hover:text-white cursor-pointer transition-colors">HOME</span>
-                <span className="opacity-30">/</span>
-                <span className="text-white">RESULTS</span>
-              </div>
-              <h1 className="text-5xl font-black text-white tracking-tighter uppercase italic">Audio Analysis Result</h1>
+      <motion.div
+        className="max-w-5xl mx-auto px-6 py-12 space-y-8 relative z-10"
+        variants={pageVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {/* Breadcrumb & Header */}
+        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 text-stone-400 text-xs font-semibold uppercase tracking-widest mb-3">
+              <Link to="/" className="hover:text-emerald-700 flex items-center gap-1 transition-colors">
+                <span className="material-symbols-outlined text-sm">arrow_back</span>
+                Back
+              </Link>
+              <span className="text-stone-300">/</span>
+              <span className="text-stone-800">Analysis Results</span>
             </div>
-            <div className="flex items-center gap-3 bg-[#131313] px-5 py-2 rounded-full border border-[#1f1f1f]">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></div>
-              <span className="text-[9px] font-black text-[#c6c6c6] uppercase tracking-[0.25em]">Backend AI Linked</span>
+            <h1 className="text-3xl font-black text-stone-900 tracking-tight">Audio Analysis</h1>
+          </div>
+          <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-100 px-4 py-2 rounded-full self-start sm:self-auto">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-xs font-bold text-emerald-800 uppercase tracking-widest">AI Model Active</span>
+          </div>
+        </motion.div>
+
+        {/* Mock data notice */}
+        {isMock && (
+          <motion.div variants={fadeUp} className="bg-amber-50 border border-amber-200 text-amber-800 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3">
+            <span className="material-symbols-outlined text-amber-600">info</span>
+            Viewing sample data — upload or record audio from the homepage to see your real results.
+          </motion.div>
+        )}
+
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+          {/* LEFT — Top Detection */}
+          <motion.div variants={fadeUp} className="lg:col-span-3 bg-white rounded-3xl border border-stone-100 shadow-sm overflow-hidden">
+            <div className="flex flex-col sm:flex-row h-full">
+              {/* Bird image */}
+              <div className="w-full sm:w-48 h-48 sm:h-auto flex-shrink-0 relative bg-stone-100">
+                <img
+                  src={topSpeciesInfo.img}
+                  alt={topSpeciesInfo.name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                <span className="absolute bottom-3 left-3 text-white text-[10px] font-bold uppercase tracking-widest bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full">
+                  Top Match
+                </span>
+              </div>
+
+              {/* Detection details */}
+              <div className="flex flex-col justify-center p-7 flex-1">
+                <span className="inline-flex items-center gap-1.5 text-emerald-700 text-xs font-bold uppercase tracking-widest mb-3">
+                  <span className="material-symbols-outlined text-sm" style={{fontVariationSettings: "'FILL' 1"}}>verified</span>
+                  Detected Species
+                </span>
+                {/* Species name — click to open Wikipedia */}
+                <a
+                  href={`https://en.wikipedia.org/wiki/${encodeURIComponent(topSpeciesInfo.name)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 mb-2"
+                >
+                  <h2 className="text-3xl font-black text-stone-900 tracking-tight leading-tight group-hover:text-emerald-700 transition-colors">
+                    {topSpeciesInfo.name}
+                  </h2>
+                  <span className="material-symbols-outlined text-lg text-stone-300 group-hover:text-emerald-500 transition-colors" title="View on Wikipedia">
+                    open_in_new
+                  </span>
+                </a>
+                <p className="text-sm text-stone-500 mb-6">Code: <span className="font-semibold text-stone-700">{topPrediction.species}</span></p>
+
+                {/* Confidence */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider">Confidence</span>
+                    <span className="text-2xl font-black text-emerald-700">{topConfidenceNum}%</span>
+                  </div>
+                  <div className="w-full bg-stone-100 rounded-full h-2.5 overflow-hidden">
+                    <motion.div
+                      className="bg-emerald-500 h-2.5 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${topConfidenceNum}%` }}
+                      transition={{ duration: 1.2, ease: 'easeOut', delay: 0.3 }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
 
-          {/* Grid Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-10 gap-10">
-            {/* Left Panel (40%) */}
-            <div className="lg:col-span-4 space-y-10">
-
-              <motion.section variants={fadeUp} className="bg-[#131313] rounded-xl overflow-hidden border border-[#1f1f1f] shadow-2xl">
-                <div className="p-6 pb-2">
-                  <h3 className="text-[10px] font-black text-white tracking-[0.3em] uppercase mb-6 opacity-60">Generated Mel Spectrogram</h3>
-                  <div className="relative aspect-video rounded bg-[#0e0e0e] border border-[#1f1f1f] overflow-hidden group">
-                    <motion.img 
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.5 }}
-                      src={specImage} 
-                      className="w-full h-full object-cover grayscale brightness-125 contrast-150 mix-blend-screen opacity-80" 
-                      alt="Spectrogram"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#131313] to-transparent opacity-60 pointer-events-none"></div>
-                  </div>
-                </div>
-
-                <div className="p-6 pt-4 bg-[#1f1f1f]/20">
-                  <div className="flex items-center gap-6 mb-4">
-                    <motion.button 
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="w-12 h-12 flex items-center justify-center rounded-full bg-white text-black transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]"
-                    >
-                      <span className="material-symbols-outlined text-2xl" style={{fontVariationSettings: "'FILL' 1"}}>play_arrow</span>
-                    </motion.button>
-                    <div className="flex-1">
-                      <div className="h-[3px] w-full bg-[#2a2a2a] rounded-full overflow-hidden">
-                        <motion.div 
-                          className="h-full bg-white relative"
-                          initial={{ width: "0%" }}
-                          animate={{ width: "100%" }}
-                          transition={{ duration: 5, ease: "linear", repeat: Infinity }}
-                        >
-                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_5px_white]"></div>
-                        </motion.div>
-                      </div>
-                      <div className="flex justify-between text-[10px] text-[#c6c6c6] mt-3 font-mono tracking-wider">
-                        <span>Playback Audio Snippet</span>
-                      </div>
+          {/* RIGHT — Probability Distribution */}
+          <motion.div variants={fadeUp} className="lg:col-span-2 bg-white rounded-3xl border border-stone-100 shadow-sm p-7">
+            <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-6">Other Candidates</h3>
+            <div className="space-y-5">
+              {predictionsArray.slice(0, 5).map((pred, i) => {
+                const conf = formatConf(pred.confidence);
+                const spInfo = getSpeciesData(pred.species);
+                const isTop = i === 0;
+                return (
+                  <div key={pred.species}>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className={`text-sm font-semibold truncate pr-2 ${isTop ? 'text-stone-900' : 'text-stone-600'}`}>
+                        {spInfo.name}
+                      </span>
+                      <span className={`text-sm font-black flex-shrink-0 ${isTop ? 'text-emerald-700' : 'text-stone-400'}`}>
+                        {conf}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-stone-100 rounded-full h-1.5 overflow-hidden">
+                      <motion.div
+                        custom={`${conf}%`}
+                        variants={probBar}
+                        initial="hidden"
+                        animate="visible"
+                        className={`h-full rounded-full ${isTop ? 'bg-emerald-500' : 'bg-stone-300'}`}
+                      />
                     </div>
                   </div>
-
-                  <div className="grid grid-cols-3 gap-4 pt-6 border-t border-[#1f1f1f]">
-                    <div className="text-center">
-                      <p className="text-[8px] text-[#c6c6c6] font-black uppercase tracking-[0.2em] mb-1">Target Length</p>
-                      <p className="text-xs font-bold text-white italic">5.0s Clip</p>
-                    </div>
-                    <div className="text-center border-x border-[#1f1f1f]">
-                      <p className="text-[8px] text-[#c6c6c6] font-black uppercase tracking-[0.2em] mb-1">Downsample</p>
-                      <p className="text-xs font-bold text-white italic">32kHz</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-[8px] text-[#c6c6c6] font-black uppercase tracking-[0.2em] mb-1">Input Source</p>
-                      <p className="text-[8px] font-bold text-white truncate max-w-[80px] mx-auto italic">{data?.filename || 'mock.wav'}</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.section>
-
-              <motion.div variants={fadeUp} className="glass-panel p-6 rounded-xl border border-[#1f1f1f] relative overflow-hidden group">
-                <div className="absolute -right-4 -bottom-4 text-white opacity-[0.03] transform group-hover:scale-110 transition-transform duration-700">
-                  <span className="material-symbols-outlined text-[120px]">music_note</span>
-                </div>
-                <div className="flex items-start gap-4 relative z-10 w-full">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white border border-white/10 shrink-0">
-                    <span className="material-symbols-outlined text-lg">auto_awesome</span>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium leading-relaxed text-sm">
-                      🎵 I am {topConfidenceNum}% confident this sounds just like a <span className="text-white font-black underline decoration-white/30 underline-offset-4">{topSpeciesInfo.name}!</span>
-                    </p>
-                    <p className="text-[10px] text-[#c6c6c6] mt-2 tracking-wide uppercase font-bold opacity-60">High Fidelity Capture</p>
-                  </div>
-                </div>
-              </motion.div>
+                );
+              })}
             </div>
+          </motion.div>
+        </div>
 
-            {/* Right Panel (60%) */}
-            <div className="lg:col-span-6 space-y-10">
-              <motion.div variants={fadeUp} className="relative bg-[#131313] rounded-xl p-10 border border-[#1f1f1f] shadow-2xl overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.02] via-transparent to-white/[0.02] opacity-50"></div>
-                <div className="relative flex flex-col md:flex-row gap-10 items-center">
-                  
-                  <div className="flex-1">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 text-white rounded-full text-[9px] font-black uppercase tracking-[0.3em] mb-6 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-                      <span className="material-symbols-outlined text-[10px]" style={{fontVariationSettings: "'FILL' 1"}}>verified</span>
-                      TOP DETECTION
-                    </span>
-                    <h2 className="text-5xl md:text-6xl font-black text-white mb-8 leading-[0.9] tracking-tighter uppercase italic drop-shadow-lg">{topSpeciesInfo.name}</h2>
-                    
-                    <div className="bg-[#0e0e0e] rounded-xl p-6 border border-[#1f1f1f] hover:border-[#333333] transition-colors duration-300">
-                      <div className="flex items-start gap-6">
-                        <div className="w-24 h-24 shrink-0 rounded-lg border border-[#1f1f1f] overflow-hidden grayscale brightness-90 group-hover:grayscale-0 transition-all duration-700">
-                          <img 
-                            src={topSpeciesInfo.img} 
-                            className="w-full h-full object-cover" 
-                            alt={topSpeciesInfo.name}
-                          />
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-[9px] text-[#c6c6c6] uppercase font-black tracking-[0.2em] mb-3 opacity-50">Database Lexicon</p>
-                          <p className="text-[11px] text-[#e2e2e2] leading-relaxed line-clamp-3 font-medium">
-                            Detected vocal pattern heavily correlates with the neural acoustic fingerprint of the {topSpeciesInfo.name.toLowerCase()}.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Confidence Progress Arc */}
-                  <div className="flex flex-col items-center justify-center p-4">
-                    <div className="relative w-44 h-44 group-hover:scale-105 transition-transform duration-500">
-                      <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="44" fill="transparent" stroke="currentColor" strokeWidth="4" className="text-[#1f1f1f]"></circle>
-                        <motion.circle 
-                          cx="50" cy="50" r="44" fill="transparent" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]"
-                          initial={{ strokeDasharray: "276", strokeDashoffset: "276" }}
-                          animate={{ strokeDashoffset: 276 - (276 * topPrediction.confidence) }} 
-                          transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 }}
-                        ></motion.circle>
-                      </svg>
-                      <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <motion.span 
-                          className="text-4xl font-black text-white italic"
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 1, duration: 0.5 }}
-                        >
-                          {topConfidenceNum}
-                        </motion.span>
-                        <span className="text-[8px] text-[#c6c6c6] font-black uppercase tracking-[0.3em] mt-1">% CONFIDENCE</span>
-                      </div>
-                    </div>
-                  </div>
+        {/* Spectrogram Card */}
+        <motion.div variants={fadeUp} className="bg-white rounded-3xl border border-stone-100 shadow-sm overflow-hidden">
+          <div className="p-6 border-b border-stone-50">
+            <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest">Mel Spectrogram</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+            {/* Spectrogram image */}
+            <div className="relative bg-stone-900 aspect-video md:aspect-auto">
+              <img
+                src={specImage}
+                alt="Mel Spectrogram"
+                className="w-full h-full object-cover opacity-90"
+              />
+            </div>
+            {/* Audio metadata */}
+            <div className="p-8 flex flex-col justify-center gap-6">
+              <p className="text-sm text-stone-600 leading-relaxed">
+                The acoustic pattern detected in this audio strongly correlates with the vocal fingerprint of the{' '}
+                <span className="font-bold text-stone-900">{topSpeciesInfo.name}</span>.
+              </p>
+              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-stone-100">
+                <div>
+                  <p className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1">Clip Length</p>
+                  <p className="text-sm font-bold text-stone-800">5.0s</p>
                 </div>
-              </motion.div>
-
-              {/* Dynamic Top 5 Detections Chart */}
-              <motion.div variants={fadeUp} className="bg-[#131313] rounded-xl p-10 border border-[#1f1f1f] shadow-xl">
-                <h3 className="text-[10px] font-black text-white tracking-[0.3em] uppercase mb-10 opacity-60">Probability Distribution</h3>
-                <div className="space-y-8">
-                  {predictionsArray.slice(0, 5).map((pred, i) => {
-                    const conf = formatConfidenceString(pred.confidence);
-                    const spInfo = getSpeciesData(pred.species);
-                    const isTop = i === 0;
-
-                    return (
-                      <div key={pred.species} className="space-y-3 group/item">
-                        <div className="flex justify-between items-end">
-                          <span className={`text-sm font-black uppercase tracking-tight ${isTop ? 'text-white italic' : 'text-[#c6c6c6]'}`}>{spInfo.name}</span>
-                          <span className={`text-sm font-black ${isTop ? 'text-white text-lg' : 'text-[#c6c6c6]'}`}>{conf}%</span>
-                        </div>
-                        <div className="h-[2px] w-full bg-[#1f1f1f] relative rounded-full overflow-hidden">
-                          <motion.div 
-                            custom={`${conf}%`}
-                            variants={probBar}
-                            className={`absolute top-0 left-0 h-full rounded-full ${isTop ? 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.4)]' : 'bg-[#c6c6c6] opacity-30'}`}
-                          ></motion.div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                <div>
+                  <p className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1">Sample Rate</p>
+                  <p className="text-sm font-bold text-stone-800">32 kHz</p>
                 </div>
-              </motion.div>
+                <div>
+                  <p className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1">Source</p>
+                  <p className="text-sm font-bold text-stone-800 truncate">{data?.filename || 'audio.wav'}</p>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
-      </main>
+
+        {/* Action Buttons */}
+        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 pb-4">
+          <Link
+            to="/"
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-white border border-stone-200 text-stone-700 font-semibold rounded-2xl hover:bg-stone-50 hover:border-stone-300 transition-all text-sm"
+          >
+            <span className="material-symbols-outlined text-lg">upload</span>
+            Analyze Another File
+          </Link>
+          <a
+            href={`https://en.wikipedia.org/wiki/${encodeURIComponent(topSpeciesInfo.name)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-white border border-stone-200 text-stone-700 font-semibold rounded-2xl hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700 transition-all text-sm"
+          >
+            <span className="material-symbols-outlined text-lg">menu_book</span>
+            Wikipedia
+          </a>
+          <Link
+            to="/gallery"
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-2xl shadow-md hover:shadow-lg transition-all text-sm"
+          >
+            <span className="material-symbols-outlined text-lg">photo_library</span>
+            Species Library
+          </Link>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

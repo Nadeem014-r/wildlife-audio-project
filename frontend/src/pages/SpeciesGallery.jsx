@@ -10,7 +10,7 @@ const audioUrls = [
   '/sounds/bird6.wav',
   '/sounds/bird7.wav',
   '/sounds/bird8.wav',
-  '/sounds/bird9.wav'
+  '/sounds/bird9.wav',
 ];
 
 const speciesData = [
@@ -36,9 +36,8 @@ const speciesData = [
   { name: 'Barn Owl', code: 'baowl', img: 'https://images.unsplash.com/photo-1516246340243-d2d88fae498c?q=80&w=600&auto=format&fit=crop', audioUrl: audioUrls[1] },
   { name: 'Bald Eagle', code: 'baleag', img: 'https://images.unsplash.com/photo-1501602715617-64906ec1459a?q=80&w=600&auto=format&fit=crop', audioUrl: audioUrls[4] },
   { name: 'Mallard', code: 'mallar', img: 'https://images.unsplash.com/photo-1528659556277-24a91f531d04?q=80&w=600&auto=format&fit=crop', audioUrl: audioUrls[2] },
-  { name: 'Penguin', code: 'pengui', img: 'https://images.unsplash.com/photo-1550927357-1941ea6ca153?q=80&w=600&auto=format&fit=crop', audioUrl: audioUrls[0] },
   { name: 'Hummingbird', code: 'humbir', img: 'https://images.unsplash.com/photo-1507202758117-62f3a6cf544b?q=80&w=600&auto=format&fit=crop', audioUrl: audioUrls[1] },
-  { name: 'Toucan', code: 'toucan', img: 'https://images.unsplash.com/photo-1552596417-6d63d0c410ba?q=80&w=600&auto=format&fit=crop', audioUrl: audioUrls[6] }
+  { name: 'Toucan', code: 'toucan', img: 'https://images.unsplash.com/photo-1552596417-6d63d0c410ba?q=80&w=600&auto=format&fit=crop', audioUrl: audioUrls[6] },
 ];
 
 export default function SpeciesGallery() {
@@ -47,11 +46,14 @@ export default function SpeciesGallery() {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    // Initialize audio element just once
-    if (!audioRef.current) {
-      audioRef.current = new Audio();
-      audioRef.current.onended = () => setPlayingId(null);
-    }
+    audioRef.current = new Audio();
+    audioRef.current.onended = () => setPlayingId(null);
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
   }, []);
 
   const toggleAudio = (species) => {
@@ -59,148 +61,149 @@ export default function SpeciesGallery() {
       audioRef.current.pause();
       setPlayingId(null);
     } else {
+      if (playingId) audioRef.current.pause();
       audioRef.current.src = species.audioUrl;
-      audioRef.current.play().catch(e => console.error("Audio playback failed", e));
+      audioRef.current.play().catch((e) => console.error('Audio playback failed', e));
       setPlayingId(species.code);
     }
   };
 
-  const filteredSpecies = speciesData.filter(s => 
-    s.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    s.code.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredSpecies = speciesData.filter(
+    (s) =>
+      s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      s.code.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { staggerChildren: 0.05 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-  };
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-grow pt-32 pb-20 px-6 max-w-7xl mx-auto w-full">
-        
-        {/* Header Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
+    <div className="min-h-screen bg-stone-50 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 -mr-40 -mt-20 w-96 h-96 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none" />
+
+      <main className="pt-28 pb-24 px-6 max-w-7xl mx-auto w-full relative z-10">
+
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6"
+          transition={{ duration: 0.5 }}
+          className="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-6"
         >
           <div>
-            <h1 className="text-5xl font-black tracking-tighter text-white mb-4 leading-tight uppercase relative">
-                <span className="relative z-10">Supported</span> <span className="text-[#c6c6c6] relative z-10">Bird Species</span>
-                <div className="absolute -left-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-3xl z-0 pointer-events-none"></div>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold tracking-widest uppercase mb-4">
+              Species Library
+            </div>
+            <h1 className="text-4xl font-black text-stone-900 tracking-tight mb-2">
+              {speciesData.length} Supported Bird Species
             </h1>
-            <p className="text-[#c6c6c6] text-lg max-w-2xl font-light">
-                {speciesData.length} species from the ORNIS dataset currently optimized for our nocturnal detection engine. Click exactly on the species to play their acoustic footprint.
+            <p className="text-stone-500 max-w-xl">
+              Browse the full library of birds our model can detect. Click any card to hear their acoustic signature.
             </p>
           </div>
-          
-          <div className="relative group">
-            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#c6c6c6] group-focus-within:text-white transition-colors">search</span>
-            <input 
-              type="text" 
-              placeholder="Search species..." 
+
+          {/* Search */}
+          <div className="relative flex-shrink-0">
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 text-xl">search</span>
+            <input
+              type="text"
+              placeholder="Search species..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-[#1f1f1f] border border-[#333] rounded-full py-3 pl-12 pr-6 text-sm focus:ring-1 focus:ring-white focus:border-white w-full md:w-72 text-white placeholder:text-[#666] outline-none shadow-xl transition-all"
+              className="bg-white border border-stone-200 rounded-full py-3 pl-12 pr-5 text-sm w-full md:w-72 text-stone-800 placeholder:text-stone-400 outline-none focus:ring-2 focus:ring-emerald-300 focus:border-emerald-300 transition-all shadow-sm"
             />
           </div>
         </motion.div>
 
-        {/* Species Grid */}
-        <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
-          variants={containerVariants}
+        {/* Grid */}
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
           initial="hidden"
           animate="visible"
+          variants={{ visible: { transition: { staggerChildren: 0.04 } } }}
         >
           <AnimatePresence>
             {filteredSpecies.map((species) => (
-              <motion.div 
+              <motion.div
                 key={species.code}
-                variants={itemVariants}
-                exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+                variants={{
+                  hidden: { opacity: 0, y: 16 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+                }}
+                exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
                 layout
-                className={`rounded-2xl p-5 flex flex-col group relative overflow-hidden cursor-pointer transition-all duration-500 border ${
-                  playingId === species.code 
-                  ? 'bg-emerald-500/10 border-emerald-500/50 shadow-[0_0_30px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/50' 
-                  : 'bg-[#131313]/60 border-white/5 hover:border-white/20 hover:bg-[#1a1a1a]/80 shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
-                } backdrop-blur-md`}
                 onClick={() => toggleAudio(species)}
-                whileHover={{ y: -8, scale: 1.02 }}
+                whileHover={{ y: -4 }}
+                className={`group rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 border ${
+                  playingId === species.code
+                    ? 'bg-emerald-50 border-emerald-200 shadow-[0_4px_20px_rgba(16,185,129,0.1)]'
+                    : 'bg-white border-stone-100 hover:border-stone-200 shadow-sm hover:shadow-md'
+                }`}
               >
-                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                
-                <div className="aspect-square rounded-xl mb-5 overflow-hidden relative bg-[#0e0e0e] border border-white/5 shadow-inner">
-                  <motion.img 
-                    whileHover={{ scale: 1.15 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    src={species.img} 
-                    alt={species.name} 
-                    className={`w-full h-full object-cover transition-all duration-700 ${playingId === species.code ? 'grayscale-0 scale-105' : 'grayscale group-hover:grayscale-0'}`}
+                {/* Image */}
+                <div className="aspect-[4/3] relative overflow-hidden bg-stone-100">
+                  <img
+                    src={species.img}
+                    alt={species.name}
+                    className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${
+                      playingId !== species.code ? 'grayscale-[30%]' : ''
+                    }`}
                   />
-                  
-                  {/* Playing Indicator */}
+
+                  {/* Playing overlay */}
                   <AnimatePresence>
                     {playingId === species.code && (
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 bg-emerald-900/40 flex items-center justify-center backdrop-blur-[2px]"
+                        className="absolute inset-0 bg-emerald-900/30 backdrop-blur-[1px] flex items-center justify-center"
                       >
-                         <div className="flex gap-1.5 items-end h-10 w-12">
-                            {[0, 1, 2, 3].map(i => (
-                                <motion.div
-                                    key={i}
-                                    animate={{ height: ['20%', '100%', '20%'] }}
-                                    transition={{ duration: 0.5 + i * 0.1, repeat: Infinity, ease: 'easeInOut' }}
-                                    className="w-2 bg-emerald-400 rounded-full shadow-[0_0_10px_rgba(52,211,153,0.8)]"
-                                />
-                            ))}
-                         </div>
+                        <div className="flex gap-1 items-end h-8">
+                          {[0, 1, 2, 3].map((i) => (
+                            <motion.div
+                              key={i}
+                              animate={{ height: ['30%', '100%', '30%'] }}
+                              transition={{ duration: 0.5 + i * 0.1, repeat: Infinity, ease: 'easeInOut' }}
+                              className="w-1.5 bg-white rounded-full"
+                            />
+                          ))}
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
 
-                <div>
-                  <h3 className={`font-black uppercase tracking-tight text-lg mb-1 transition-colors ${playingId === species.code ? 'text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]' : 'text-white'}`}>{species.name}</h3>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#a3a3a3] font-mono text-xs uppercase tracking-widest">{species.code}</span>
+                {/* Info */}
+                <div className="p-4">
+                  <h3 className={`font-bold text-sm leading-tight mb-1 transition-colors ${playingId === species.code ? 'text-emerald-700' : 'text-stone-800'}`}>
+                    {species.name}
+                  </h3>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-stone-400 font-mono uppercase tracking-wider">{species.code}</span>
+                    <span className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider transition-colors ${
+                      playingId === species.code ? 'text-emerald-600' : 'text-stone-400 group-hover:text-emerald-600'
+                    }`}>
+                      <span className="material-symbols-outlined text-sm" style={playingId === species.code ? { fontVariationSettings: "'FILL' 1" } : {}}>
+                        {playingId === species.code ? 'stop_circle' : 'play_circle'}
+                      </span>
+                      {playingId === species.code ? 'Stop' : 'Play'}
+                    </span>
                   </div>
                 </div>
-                
-                <button 
-                  className={`mt-auto btn-obsidian py-3 px-4 rounded-lg text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all duration-300 ${playingId === species.code ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.2)]' : ''}`}
-                >
-                  <span className="material-symbols-outlined text-sm" style={playingId === species.code ? {fontVariationSettings: "'FILL' 1"} : {}}>
-                    {playingId === species.code ? 'stop_circle' : 'play_circle'}
-                  </span>
-                  {playingId === species.code ? 'Listening...' : 'Play Call'}
-                </button>
               </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
 
+        {/* Empty state */}
         {filteredSpecies.length === 0 && (
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            className="w-full text-center py-20 text-[#c6c6c6]"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="w-full text-center py-24"
           >
-            <span className="material-symbols-outlined text-6xl mb-4 opacity-50">search_off</span>
-            <p className="text-xl font-medium">No species found matching "{searchTerm}"</p>
+            <span className="material-symbols-outlined text-5xl text-stone-300 block mb-4">search_off</span>
+            <p className="text-lg font-semibold text-stone-500">No species found for "{searchTerm}"</p>
+            <p className="text-sm text-stone-400 mt-1">Try a different name or species code.</p>
           </motion.div>
         )}
       </main>
