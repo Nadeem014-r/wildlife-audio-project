@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const speciesMap = {
+  // Brazilian
   'rubthr1': { name: 'Ruby-throated Bulbul', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBpy9JlAVXqlwuzW3_-BIuL70qa3rOn4nuyfUou35Aw-RYf-x1bsKt0GLt2c4yB2t-_y63xgsLqBh6TMC5pXSVqoQukMmqKqSgZVvR9O1JUu-aQY3VVbV3AbsW7kHPqDMD0EsiO1OXJY7ua7_xINQb5L12RIk0NbssHPH8eowaXo9U5RNRitqv6jzOX_F2mQJPO98M_qcRLZxnwWDG11rMLel3uwKIKLHAhmUSssXDVRmShNsmNjpVXXxy9rePxTdknsCl6Zk9JjIo' },
   'banana': { name: 'Bananaquit', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAz8ARkHV6hUhpGYEyrVD-HBWQkQwr0U2XMpxGY0yy0vjKd_4doWrjyGAcdGK64suJYmIhtmHal8skLakaijOrYQWjQmAIBRIR-aLCxLBix2w-9t-70X__BGWpuEOoc2S4qAkQR1o6WzLwn9sc6Q6sT6vjnO9s6cPWnF3CaZrV-C26rCbA90o-9IKKYL_IdxI3T9oz6atwewV9E9cRI2H_cGV0EoZz42e9pdqrsLdu4IoIQKavBMUDHtffazQabc06YQ43wCoJiR6o' },
   'soulap1': { name: 'Southern Lapwing', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDvaDcP4vhG_nd7UmMCr9sG148ldpUhg-vKWgj6H6d4Jy1aMRD2TX1pDUHML7t7ecp6hjhTaZ1e97YB9267mZZ5ACboIf1XnJd0CDy-hrvtqU330OFeL8YDDM-ypHRAPcU1dig14KPgq72eN05ScHZBFqUl_70FvrrKW7q6fubaoc06QVkcEszWll4EZX3QnyYubREEc5nr7uY_U-2MiILrtDRQHWfhaCwz2wnm5bLtiRzJcCjt81Tc6E3dhNrE2sEgXp0KwSPq6fI' },
@@ -18,6 +19,22 @@ const speciesMap = {
   'whtdov': { name: 'White-tipped Dove', img: 'https://images.unsplash.com/photo-1454044569420-1a221f7ed248?q=80&w=600&auto=format&fit=crop' },
   'trsowl': { name: 'Tropical Screech-Owl', img: 'https://images.unsplash.com/photo-1534260164206-2a3a4a72891d?q=80&w=600&auto=format&fit=crop' },
   'bbwduc': { name: 'Black-bellied Whistling-Duck', img: 'https://images.unsplash.com/photo-1549472304-4aff513aedbb?q=80&w=600&auto=format&fit=crop' },
+  // Indian
+  'indpea': { name: 'Indian Peafowl', img: 'https://images.unsplash.com/photo-1547671192-38d7c07b66ec?q=80&w=600&auto=format&fit=crop' },
+  'houcro': { name: 'House Crow', img: 'https://images.unsplash.com/photo-1524316982855-6b71f31f8b1b?q=80&w=600&auto=format&fit=crop' },
+  'asikoe': { name: 'Asian Koel', img: 'https://images.unsplash.com/photo-1574068468668-a05a11f871da?q=80&w=600&auto=format&fit=crop' },
+  'revbul': { name: 'Red-vented Bulbul', img: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=600&auto=format&fit=crop' },
+  'commyn': { name: 'Common Myna', img: 'https://images.unsplash.com/photo-1596700810769-af7b79140aa9?q=80&w=600&auto=format&fit=crop' },
+  'rorpar': { name: 'Rose-ringed Parakeet', img: 'https://images.unsplash.com/photo-1550259508-2e0618ff7e42?q=80&w=600&auto=format&fit=crop' },
+  'comtai': { name: 'Common Tailorbird', img: 'https://images.unsplash.com/photo-1518063073995-1f8d48db36de?q=80&w=600&auto=format&fit=crop' },
+  'ormrob': { name: 'Oriental Magpie-Robin', img: 'https://images.unsplash.com/photo-1534063261622-6b943d671cde?q=80&w=600&auto=format&fit=crop' },
+  'whtkin': { name: 'White-throated Kingfisher', img: 'https://images.unsplash.com/photo-1620694119932-bb9f1df41ee6?q=80&w=600&auto=format&fit=crop' },
+  'ruftre': { name: 'Rufous Treepie', img: 'https://images.unsplash.com/photo-1454044569420-1a221f7ed248?q=80&w=600&auto=format&fit=crop' },
+  'bladro': { name: 'Black Drongo', img: 'https://images.unsplash.com/photo-1549474706-03c004cdece2?q=80&w=600&auto=format&fit=crop' },
+  'copbar': { name: 'Coppersmith Barbet', img: 'https://images.unsplash.com/photo-1534260164206-2a3a4a72891d?q=80&w=600&auto=format&fit=crop' },
+  'pursun': { name: 'Purple Sunbird', img: 'https://images.unsplash.com/photo-1520108846386-a21edde7ffbb?q=80&w=600&auto=format&fit=crop' },
+  'rewlap': { name: 'Red-wattled Lapwing', img: 'https://images.unsplash.com/photo-1549472304-4aff513aedbb?q=80&w=600&auto=format&fit=crop' },
+  'indrob': { name: 'Indian Robin', img: 'https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=600&auto=format&fit=crop' },
 };
 
 const getSpeciesData = (code) =>
@@ -302,11 +319,10 @@ export default function LandingPage() {
                   onDragLeave={onDragLeave}
                   onDrop={onDrop}
                   onClick={() => !isUploading && fileInputRef.current?.click()}
-                  className={`relative group w-full rounded-3xl flex flex-col items-center justify-center py-14 px-8 text-center cursor-pointer transition-all duration-300 ${
-                    isDragging
+                  className={`relative group w-full rounded-3xl flex flex-col items-center justify-center py-14 px-8 text-center cursor-pointer transition-all duration-300 ${isDragging
                       ? 'bg-emerald-50 border-2 border-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.08)] scale-[1.01]'
                       : 'bg-white border border-stone-200 hover:border-emerald-200 hover:shadow-md'
-                  }`}
+                    }`}
                 >
                   <input
                     type="file"
@@ -342,11 +358,10 @@ export default function LandingPage() {
                 <button
                   onClick={toggleRecording}
                   disabled={isUploading}
-                  className={`w-full flex items-center justify-center gap-3 py-5 rounded-2xl font-bold text-base transition-all ${
-                    isRecording
+                  className={`w-full flex items-center justify-center gap-3 py-5 rounded-2xl font-bold text-base transition-all ${isRecording
                       ? 'bg-red-50 text-red-600 border-2 border-red-300 shadow-[0_0_16px_rgba(239,68,68,0.08)]'
                       : 'bg-white text-stone-700 border border-stone-200 hover:border-emerald-200 hover:text-emerald-700 hover:bg-emerald-50 shadow-sm hover:shadow-md disabled:opacity-40 disabled:cursor-not-allowed'
-                  }`}
+                    }`}
                 >
                   {isRecording ? (
                     <>
@@ -378,7 +393,7 @@ export default function LandingPage() {
                 className="w-full bg-white rounded-3xl border border-stone-100 shadow-sm overflow-hidden"
               >
                 {(() => {
-                  const top = predictionResult.predictions?.[0];
+                  const top = predictionResult.top5_predictions?.[0];
                   if (!top) {
                     return (
                       <div className="p-10 text-center">

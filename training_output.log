@@ -1,0 +1,358 @@
+Download finished. Starting training...
+/Users/harshanand/vscode_files/project_bird/wildlife-audio-project/src/train.py:70: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = GradScaler(enabled=use_amp)
+/Users/harshanand/vscode_files/project_bird/wildlife-audio-project/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+/Users/harshanand/vscode_files/project_bird/wildlife-audio-project/src/train.py:87: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast(enabled=use_amp):
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+/Users/harshanand/vscode_files/project_bird/wildlife-audio-project/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/harshanand/vscode_files/project_bird/wildlife-audio-project/src/train.py:117: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast(enabled=use_amp):
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Using device: mps  |  AMP: False  |  Grad accum: 2x
+Loading datasets...
+Dataset split → Train: 392, Val: 84, Test: 84
+Initializing model (EfficientNet-B2)...
+
+── Epoch 1/20 ──
+  Batch    0/13 | loss: 0.7073 | lr: 0.00e+00
+  Train loss: 0.7007  |  Val loss: 0.6919
+  ★ Saved new best model!
+
+── Epoch 2/20 ──
+  Batch    0/13 | loss: 0.6769 | lr: 1.62e-04
+  Train loss: 0.6473  |  Val loss: 0.6743
+  ★ Saved new best model!
+
+── Epoch 3/20 ──
+  Batch    0/13 | loss: 0.5882 | lr: 3.00e-04
+  Train loss: 0.5559  |  Val loss: 0.6101
+  ★ Saved new best model!
+
+── Epoch 4/20 ──
+  Batch    0/13 | loss: 0.5019 | lr: 2.97e-04
+  Train loss: 0.4731  |  Val loss: 0.5135
+  ★ Saved new best model!
+
+── Epoch 5/20 ──
+  Batch    0/13 | loss: 0.4251 | lr: 2.89e-04
+  Train loss: 0.4128  |  Val loss: 0.4412
+  ★ Saved new best model!
+
+── Epoch 6/20 ──
+  Batch    0/13 | loss: 0.3894 | lr: 2.77e-04
+  Train loss: 0.3674  |  Val loss: 0.3993
+  ★ Saved new best model!
+
+── Epoch 7/20 ──
+  Batch    0/13 | loss: 0.3419 | lr: 2.61e-04
+  Train loss: 0.3371  |  Val loss: 0.3526
+  ★ Saved new best model!
+
+── Epoch 8/20 ──
+  Batch    0/13 | loss: 0.3190 | lr: 2.42e-04
+  Train loss: 0.3118  |  Val loss: 0.3284
+  ★ Saved new best model!
+
+── Epoch 9/20 ──
+  Batch    0/13 | loss: 0.3110 | lr: 2.20e-04
+  Train loss: 0.2971  |  Val loss: 0.3076
+  ★ Saved new best model!
+
+── Epoch 10/20 ──
+  Batch    0/13 | loss: 0.2881 | lr: 1.96e-04
+  Train loss: 0.2823  |  Val loss: 0.2970
+  ★ Saved new best model!
+
+── Epoch 11/20 ──
+  Batch    0/13 | loss: 0.2766 | lr: 1.70e-04
+  Train loss: 0.2754  |  Val loss: 0.2859
+  ★ Saved new best model!
+
+── Epoch 12/20 ──
+  Batch    0/13 | loss: 0.2848 | lr: 1.45e-04
+  Train loss: 0.2678  |  Val loss: 0.2727
+  ★ Saved new best model!
+
+── Epoch 13/20 ──
+  Batch    0/13 | loss: 0.2639 | lr: 1.21e-04
+  Train loss: 0.2647  |  Val loss: 0.2659
+  ★ Saved new best model!
+
+── Epoch 14/20 ──
+  Batch    0/13 | loss: 0.2643 | lr: 9.75e-05
+  Train loss: 0.2568  |  Val loss: 0.2656
+  ★ Saved new best model!
+
+── Epoch 15/20 ──
+  Batch    0/13 | loss: 0.2636 | lr: 7.68e-05
+  Train loss: 0.2554  |  Val loss: 0.2602
+  ★ Saved new best model!
+
+── Epoch 16/20 ──
+  Batch    0/13 | loss: 0.2547 | lr: 5.93e-05
+  Train loss: 0.2526  |  Val loss: 0.2617
+  No improvement (1/6)
+
+── Epoch 17/20 ──
+  Batch    0/13 | loss: 0.2454 | lr: 4.55e-05
+  Train loss: 0.2479  |  Val loss: 0.2571
+  ★ Saved new best model!
+
+── Epoch 18/20 ──
+  Batch    0/13 | loss: 0.2604 | lr: 3.58e-05
+  Train loss: 0.2500  |  Val loss: 0.2544
+  ★ Saved new best model!
+
+── Epoch 19/20 ──
+  Batch    0/13 | loss: 0.2581 | lr: 3.08e-05
+  Train loss: 0.2468  |  Val loss: 0.2540
+  ★ Saved new best model!
+
+── Epoch 20/20 ──
+  Batch    0/13 | loss: 0.2598 | lr: 3.04e-05
+  Train loss: 0.2495  |  Val loss: 0.2509
+  ★ Saved new best model!
+
+Training complete. Best val loss: 0.2509

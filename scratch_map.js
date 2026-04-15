@@ -1,0 +1,17 @@
+const newSpeciesMap = {
+  'indpea': { name: 'Indian Peafowl', img: 'https://images.unsplash.com/photo-1547671192-38d7c07b66ec?q=80&w=600&auto=format&fit=crop' },
+  'houcro': { name: 'House Crow', img: 'https://images.unsplash.com/photo-1524316982855-6b71f31f8b1b?q=80&w=600&auto=format&fit=crop' },
+  'asikoe': { name: 'Asian Koel', img: 'https://images.unsplash.com/photo-1574068468668-a05a11f871da?q=80&w=600&auto=format&fit=crop' },
+  'revbul': { name: 'Red-vented Bulbul', img: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=600&auto=format&fit=crop' },
+  'commyn': { name: 'Common Myna', img: 'https://images.unsplash.com/photo-1596700810769-af7b79140aa9?q=80&w=600&auto=format&fit=crop' },
+  'rorpar': { name: 'Rose-ringed Parakeet', img: 'https://images.unsplash.com/photo-1550259508-2e0618ff7e42?q=80&w=600&auto=format&fit=crop' },
+  'comtai': { name: 'Common Tailorbird', img: 'https://images.unsplash.com/photo-1518063073995-1f8d48db36de?q=80&w=600&auto=format&fit=crop' },
+  'ormrob': { name: 'Oriental Magpie-Robin', img: 'https://images.unsplash.com/photo-1534063261622-6b943d671cde?q=80&w=600&auto=format&fit=crop' },
+  'whtkin': { name: 'White-throated Kingfisher', img: 'https://images.unsplash.com/photo-1620694119932-bb9f1df41ee6?q=80&w=600&auto=format&fit=crop' },
+  'ruftre': { name: 'Rufous Treepie', img: 'https://images.unsplash.com/photo-1454044569420-1a221f7ed248?q=80&w=600&auto=format&fit=crop' },
+  'bladro': { name: 'Black Drongo', img: 'https://images.unsplash.com/photo-1549474706-03c004cdece2?q=80&w=600&auto=format&fit=crop' },
+  'copbar': { name: 'Coppersmith Barbet', img: 'https://images.unsplash.com/photo-1534260164206-2a3a4a72891d?q=80&w=600&auto=format&fit=crop' },
+  'pursun': { name: 'Purple Sunbird', img: 'https://images.unsplash.com/photo-1520108846386-a21edde7ffbb?q=80&w=600&auto=format&fit=crop' },
+  'rewlap': { name: 'Red-wattled Lapwing', img: 'https://images.unsplash.com/photo-1549472304-4aff513aedbb?q=80&w=600&auto=format&fit=crop' },
+  'indrob': { name: 'Indian Robin', img: 'https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=600&auto=format&fit=crop' },
+};

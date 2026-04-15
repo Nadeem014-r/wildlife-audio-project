@@ -3,21 +3,38 @@ import { motion } from 'framer-motion';
 import { useLocation, Link } from 'react-router-dom';
 
 const speciesMap = {
-  'rubthr1': { name: 'Ruby-throated Bulbul', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBpy9JlAVXqlwuzW3_-BIuL70qa3rOn4nuyfUou35Aw-RYf-x1bsKt0GLt2c4yB2t-_y63xgsLqBh6TMC5pXSVqoQukMmqKqSgZVvR9O1JUu-aQY3VVbV3AbsW7kHPqDMD0EsiO1OXJY7ua7_xINQb5L12RIk0NbssHPH8eowaXo9U5RNRitqv6jzOX_F2mQJPO98M_qcRLZxnwWDG11rMLel3uwKIKLHAhmUSssXDVRmShNsmNjpVXXxy9rePxTdknsCl6Zk9JjIo' },
-  'banana': { name: 'Bananaquit', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAz8ARkHV6hUhpGYEyrVD-HBWQkQwr0U2XMpxGY0yy0vjKd_4doWrjyGAcdGK64suJYmIhtmHal8skLakaijOrYQWjQmAIBRIR-aLCxLBix2w-9t-70X__BGWpuEOoc2S4qAkQR1o6WzLwn9sc6Q6sT6vjnO9s6cPWnF3CaZrV-C26rCbA90o-9IKKYL_IdxI3T9oz6atwewV9E9cRI2H_cGV0EoZz42e9pdqrsLdu4IoIQKavBMUDHtffazQabc06YQ43wCoJiR6o' },
-  'soulap1': { name: 'Southern Lapwing', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDvaDcP4vhG_nd7UmMCr9sG148ldpUhg-vKWgj6H6d4Jy1aMRD2TX1pDUHML7t7ecp6hjhTaZ1e97YB9267mZZ5ACboIf1XnJd0CDy-hrvtqU330OFeL8YDDM-ypHRAPcU1dig14KPgq72eN05ScHZBFqUl_70FvrrKW7q6fubaoc06QVkcEszWll4EZX3QnyYubREEc5nr7uY_U-2MiILrtDRQHWfhaCwz2wnm5bLtiRzJcCjt81Tc6E3dhNrE2sEgXp0KwSPq6fI' },
-  'fepowl': { name: 'Ferruginous Pygmy-Owl', img: 'https://images.unsplash.com/photo-1574068468668-a05a11f871da?q=80&w=600&auto=format&fit=crop' },
-  'houspa': { name: 'House Sparrow', img: 'https://images.unsplash.com/photo-1549474706-03c004cdece2?q=80&w=600&auto=format&fit=crop' },
-  'osprey': { name: 'Osprey', img: 'https://images.unsplash.com/photo-1596700810769-af7b79140aa9?q=80&w=600&auto=format&fit=crop' },
-  'coffal1': { name: 'Collared Forest-Falcon', img: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=600&auto=format&fit=crop' },
-  'socfly1': { name: 'Social Flycatcher', img: 'https://images.unsplash.com/photo-1520108846386-a21edde7ffbb?q=80&w=600&auto=format&fit=crop' },
-  'yeofly1': { name: 'Yellow-olive Flycatcher', img: 'https://images.unsplash.com/photo-1518063073995-1f8d48db36de?q=80&w=600&auto=format&fit=crop' },
-  'compau': { name: 'Common Pauraque', img: 'https://images.unsplash.com/photo-1620694119932-bb9f1df41ee6?q=80&w=600&auto=format&fit=crop' },
-  'bobfly1': { name: 'Boat-billed Flycatcher', img: 'https://images.unsplash.com/photo-1550259508-2e0618ff7e42?q=80&w=600&auto=format&fit=crop' },
-  'bncfly': { name: 'Brown-crested Flycatcher', img: 'https://images.unsplash.com/photo-1534063261622-6b943d671cde?q=80&w=600&auto=format&fit=crop' },
-  'whtdov': { name: 'White-tipped Dove', img: 'https://images.unsplash.com/photo-1454044569420-1a221f7ed248?q=80&w=600&auto=format&fit=crop' },
+  // Brazilian
+  'rubthr1': { name: 'Ruby-throated Bulbul', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Asian_koel.jpg/500px-Asian_koel.jpg' },
+  'banana': { name: 'Bananaquit', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Bananaquits.jpg/500px-Bananaquits.jpg' },
+  'soulap1': { name: 'Southern Lapwing', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Southern_Lapwing_-_Indaiatuba%2C_SP%2C_BR.jpg/500px-Southern_Lapwing_-_Indaiatuba%2C_SP%2C_BR.jpg' },
+  'fepowl': { name: 'Ferruginous Pygmy-Owl', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Ferruginous_pygmy_owl_%28Glaucidium_brasilianum_ridgwayi%29_Copan.jpg/500px-Ferruginous_pygmy_owl_%28Glaucidium_brasilianum_ridgwayi%29_Copan.jpg' },
+  'houspa': { name: 'House Sparrow', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/House_sparrow_male_in_Prospect_Park_%2853532%29.jpg/500px-House_sparrow_male_in_Prospect_Park_%2853532%29.jpg' },
+  'osprey': { name: 'Osprey', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Osprey_Perched_Snag_Heislerville.jpg/500px-Osprey_Perched_Snag_Heislerville.jpg' },
+  'coffal1': { name: 'Collared Forest-Falcon', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Micrastur_semitorquatus_%28cropped%29.jpg/500px-Micrastur_semitorquatus_%28cropped%29.jpg' },
+  'socfly1': { name: 'Social Flycatcher', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Social_Flycatcher.png/500px-Social_Flycatcher.png' },
+  'yeofly1': { name: 'Yellow-olive Flycatcher', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Yellow-bellied_Flycatcher_-_Empidonax_flaviventris.jpg/500px-Yellow-bellied_Flycatcher_-_Empidonax_flaviventris.jpg' },
+  'compau': { name: 'Common Pauraque', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Trinidad_and_Tobago_hummingbirds_composite.jpg/500px-Trinidad_and_Tobago_hummingbirds_composite.jpg' },
+  'bobfly1': { name: 'Boat-billed Flycatcher', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/NEINEI_%28Megarynchus_pitangua%29.jpg/500px-NEINEI_%28Megarynchus_pitangua%29.jpg' },
+  'bncfly': { name: 'Brown-crested Flycatcher', img: 'https://upload.wikimedia.org/wikipedia/commons/d/dc/Myiarchus_tyrannulus_1.jpg' },
+  'whtdov': { name: 'White-tipped Dove', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/White-tipped_Dove_-_Panama_H8O8470.jpg/500px-White-tipped_Dove_-_Panama_H8O8470.jpg' },
   'trsowl': { name: 'Tropical Screech-Owl', img: 'https://images.unsplash.com/photo-1534260164206-2a3a4a72891d?q=80&w=600&auto=format&fit=crop' },
-  'bbwduc': { name: 'Black-bellied Whistling-Duck', img: 'https://images.unsplash.com/photo-1549472304-4aff513aedbb?q=80&w=600&auto=format&fit=crop' },
+  'bbwduc': { name: 'Black-bellied Whistling-Duck', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Anas_platyrhynchos_male_female_quadrat.jpg/500px-Anas_platyrhynchos_male_female_quadrat.jpg' },
+  // Indian
+  'indpea': { name: 'Indian Peafowl', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Peacock_on_tree_%2852077240794%29.jpg/500px-Peacock_on_tree_%2852077240794%29.jpg' },
+  'houcro': { name: 'House Crow', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Corvus_splendens.jpg/500px-Corvus_splendens.jpg' },
+  'asikoe': { name: 'Asian Koel', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Asian_koel.jpg/500px-Asian_koel.jpg' },
+  'revbul': { name: 'Red-vented Bulbul', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Red-vented_bulbul_-_Jamnagar_2023-11-13.jpg/500px-Red-vented_bulbul_-_Jamnagar_2023-11-13.jpg' },
+  'commyn': { name: 'Common Myna', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Acridotheres_tristis00.jpg/500px-Acridotheres_tristis00.jpg' },
+  'rorpar': { name: 'Rose-ringed Parakeet', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/African_Rose-ringed_Parakeet%2C_Tendaba%2C_Gambia_1.jpg/500px-African_Rose-ringed_Parakeet%2C_Tendaba%2C_Gambia_1.jpg' },
+  'comtai': { name: 'Common Tailorbird', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Common_tailorbird_%28Orthotomus_sutorius%29.jpg/500px-Common_tailorbird_%28Orthotomus_sutorius%29.jpg' },
+  'ormrob': { name: 'Oriental Magpie-Robin', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Oriental_magpie-robin_%28Copsychus_saularis_ceylonensis%29_male.jpg/500px-Oriental_magpie-robin_%28Copsychus_saularis_ceylonensis%29_male.jpg' },
+  'whtkin': { name: 'White-throated Kingfisher', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/White-throated_kingfisher_%28Halcyon_smyrnensis%29_Galle.jpg/500px-White-throated_kingfisher_%28Halcyon_smyrnensis%29_Galle.jpg' },
+  'ruftre': { name: 'Rufous Treepie', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Rufous_treepie_%28Dendrocitta_vagabunda_vagabunda%29_Jahalana_pair.jpg/500px-Rufous_treepie_%28Dendrocitta_vagabunda_vagabunda%29_Jahalana_pair.jpg' },
+  'bladro': { name: 'Black Drongo', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Bdrongo-Sandeep1.jpg/500px-Bdrongo-Sandeep1.jpg' },
+  'copbar': { name: 'Coppersmith Barbet', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Coppersmith_Barbet_%28Megalaima_haemacephala%29_by_Shantanu_Kuveskar.jpg/500px-Coppersmith_Barbet_%28Megalaima_haemacephala%29_by_Shantanu_Kuveskar.jpg' },
+  'pursun': { name: 'Purple Sunbird', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Purple_Sunbird_%28Nectarinia_asiatica%29-_Male_%28Breeding%29_on_Kapok_%28Ceiba_pentandra%29_in_Kolkata_I_IMG_1893.jpg/500px-Purple_Sunbird_%28Nectarinia_asiatica%29-_Male_%28Breeding%29_on_Kapok_%28Ceiba_pentandra%29_in_Kolkata_I_IMG_1893.jpg' },
+  'rewlap': { name: 'Red-wattled Lapwing', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Red-wattled_lapwing_%28Vanellus_indicus%29_Photograph_by_Shantanu_Kuveskar.jpg/500px-Red-wattled_lapwing_%28Vanellus_indicus%29_Photograph_by_Shantanu_Kuveskar.jpg' },
+  'indrob': { name: 'Indian Robin', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Indian_Robin_%28Copsychus_fulicatus%29%2C_Koottanad%2C_Palakkad_district%2C_Kerala_1.jpg/500px-Indian_Robin_%28Copsychus_fulicatus%29%2C_Koottanad%2C_Palakkad_district%2C_Kerala_1.jpg' },
 };
 
 const getSpeciesData = (code) =>
@@ -46,17 +63,17 @@ export default function DetectionResults() {
   const data = location.state?.predictionData;
   const isMock = !data;
 
-  const topPrediction = !isMock && data.predictions.length > 0
-    ? data.predictions[0]
-    : { species: 'rubthr1', confidence: 0.947 };
+  const topPrediction = !isMock && data.top5_predictions?.length > 0
+    ? data.top5_predictions[0]
+    : { species: 'indpea', confidence: 0.947 };
 
   const predictionsArray = !isMock
-    ? data.predictions
+    ? data.top5_predictions
     : [
-        { species: 'rubthr1', confidence: 0.947 },
-        { species: 'houspa', confidence: 0.031 },
-        { species: 'socfly1', confidence: 0.014 },
-        { species: 'trsowl', confidence: 0.005 },
+        { species: 'indpea', confidence: 0.947 },
+        { species: 'houcro', confidence: 0.031 },
+        { species: 'asikoe', confidence: 0.014 },
+        { species: 'commyn', confidence: 0.005 },
       ];
 
   const specImage = !isMock
@@ -118,6 +135,10 @@ export default function DetectionResults() {
                   src={topSpeciesInfo.img}
                   alt={topSpeciesInfo.name}
                   className="absolute inset-0 w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23e7e5e4'/%3E%3Ctext x='100' y='110' font-size='64' text-anchor='middle' dominant-baseline='middle'%3E%F0%9F%A6%85%3C/text%3E%3C/svg%3E";
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                 <span className="absolute bottom-3 left-3 text-white text-[10px] font-bold uppercase tracking-widest bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full">
