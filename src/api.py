@@ -10,8 +10,10 @@ import librosa
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.model import BirdClassifier
 from src.dataset import (
@@ -58,8 +60,8 @@ else:
 model.to(device)
 model.eval()
 
-# Optimal inference threshold (can be updated after running evaluate.py)
-INFERENCE_THRESHOLD = float(os.environ.get("BIRD_THRESHOLD", "0.5"))
+# Minimum confidence to consider a detection "confident" (display only)
+MIN_DISPLAY_CONF = float(os.environ.get("BIRD_MIN_CONF", "0.10"))
 
 
 # ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -106,6 +108,21 @@ def health_check():
     }
 
 
+TRAIN_AUDIO_DIR = Path("data/birdclef-2026/train_audio")
+
+@app.get("/audio-sample/{species_code}")
+def audio_sample(species_code: str):
+    """Serve a sample .ogg audio file for a given species code."""
+    species_dir = TRAIN_AUDIO_DIR / species_code
+    if not species_dir.is_dir():
+        raise HTTPException(status_code=404, detail=f"No audio found for species: {species_code}")
+    ogg_files = sorted(species_dir.glob("*.ogg"))
+    if not ogg_files:
+        raise HTTPException(status_code=404, detail=f"No .ogg files in {species_code} directory")
+    # Return the first file as a sample
+    return FileResponse(ogg_files[0], media_type="audio/ogg", filename=f"{species_code}_sample.ogg")
+
+
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     allowed = {'audio/ogg', 'audio/wav', 'audio/flac', 'audio/mpeg', 'application/octet-stream'}
@@ -125,28 +142,29 @@ async def predict(file: UploadFile = File(...)):
         spec_tensor = torch.from_numpy(spec).float().unsqueeze(0).to(device)  # (1, 3, 224, 224)
         with torch.no_grad():
             logits = model(spec_tensor)
-            probs  = torch.softmax(logits, dim=1).squeeze(0).cpu().numpy()           # (C,)
+            probs  = torch.softmax(logits, dim=1).squeeze(0).cpu().numpy()   # (C,) — sums to 1.0
 
-        predictions = []
-        for i, species in enumerate(TOP_SPECIES):
-            conf = float(probs[i])
-            predictions.append({
-                "species":    species,
-                "confidence": round(conf, 4),
-                "detected":   conf >= INFERENCE_THRESHOLD,
+        # Single-label: rank all classes by confidence
+        ranked_indices = np.argsort(probs)[::-1]  # highest confidence first
+
+        top5 = []
+        for i in ranked_indices[:5]:
+            top5.append({
+                "species":    TOP_SPECIES[i],
+                "confidence": round(float(probs[i]), 4),
+                "rank":       len(top5) + 1,
             })
 
-        predictions.sort(key=lambda x: x["confidence"], reverse=True)
-
-        # Detected species above threshold
-        detected = [p for p in predictions if p["detected"]]
+        best = top5[0]  # single most-likely prediction
 
         return {
             "filename":          file.filename,
             "status":            "success",
-            "top5_predictions":  predictions[:5],
-            "detected_species":  detected,
-            "threshold_used":    INFERENCE_THRESHOLD,
+            "prediction":        best["species"],
+            "confidence":        best["confidence"],
+            "top5_predictions":  top5,
+            # Flag if model is uncertain (top class < 10% — near-random for 220 classes)
+            "low_confidence":    best["confidence"] < MIN_DISPLAY_CONF,
             "spectrogram_image": generate_spectrogram_b64(spec),
         }
 

@@ -121,33 +121,25 @@ class BirdDataset(Dataset):
 
     def __getitem__(self, idx):
         row = self.metadata.iloc[idx]
-        file_path = os.path.join(self.audio_dir, row['filename'])
+        # Files are stored flat in audio_dir (no subdirectories)
+        file_path = os.path.join(self.audio_dir, os.path.basename(row['filename']))
 
-        # Build target vector
-        target = torch.zeros(NUM_CLASSES, dtype=torch.float32)
-        if row['primary_label'] in LABEL_TO_ID:
-            target[LABEL_TO_ID[row['primary_label']]] = 1.0
+        # Build target as a single integer class index (required by CrossEntropyLoss)
+        label = row['primary_label']
+        target = torch.tensor(
+            LABEL_TO_ID.get(label, 0),
+            dtype=torch.long
+        )
 
         y = self._load_audio(file_path)
 
         # --- Augmentations (audio domain) ---
         if self.augment:
-            # 1. Audio mixing (Mixup-style)
-            if random.random() < 0.4:
-                mix_row = self.metadata.iloc[random.randint(0, len(self.metadata) - 1)]
-                mix_path = os.path.join(self.audio_dir, mix_row['filename'])
-                y2 = self._load_audio(mix_path)
-                snr = random.uniform(0.1, 0.5)
-                y = mix_audio(y, y2, snr=snr)
-                if mix_row['primary_label'] in LABEL_TO_ID:
-                    target *= (1.0 - snr)
-                    target[LABEL_TO_ID[mix_row['primary_label']]] += snr
-
-            # 2. Time shift
+            # 1. Time shift
             if random.random() < 0.3:
                 y = time_shift_audio(y, self.sr)
 
-            # 3. Gaussian noise
+            # 2. Gaussian noise
             if random.random() < 0.25:
                 y = add_gaussian_noise(y)
 

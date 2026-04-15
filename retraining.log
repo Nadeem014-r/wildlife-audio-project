@@ -1,0 +1,178 @@
+Using device: mps  |  AMP: False  |  Grad accum: 2x
+Loading datasets...
+Dataset split → Train: 25182, Val: 5415, Test: 5512
+Initializing model (EfficientNet-B2)...
+/Users/harshanand/vscode_files/project_bird/wildlife-audio-project/src/train.py:61: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = GradScaler(enabled=use_amp)
+
+── Epoch 1/30 ──
+/Users/harshanand/vscode_files/project_bird/wildlife-audio-project/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/harshanand/vscode_files/project_bird/wildlife-audio-project/src/train.py:90: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast(enabled=use_amp):
+  Batch    0/787 | loss: 5.4221 | lr: 0.00e+00
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch   20/787 | loss: 5.4150 | lr: 2.54e-06
+  Batch   40/787 | loss: 5.5533 | lr: 5.08e-06
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch   60/787 | loss: 5.4166 | lr: 7.63e-06
+  Batch   80/787 | loss: 5.4188 | lr: 1.02e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  100/787 | loss: 5.3325 | lr: 1.27e-05
+  Batch  120/787 | loss: 5.5151 | lr: 1.53e-05
+  Batch  140/787 | loss: 5.6231 | lr: 1.78e-05
+  Batch  160/787 | loss: 5.4578 | lr: 2.03e-05
+  Batch  180/787 | loss: 5.5225 | lr: 2.29e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+  Batch  200/787 | loss: 5.4457 | lr: 2.54e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  220/787 | loss: 5.3476 | lr: 2.80e-05
+  Batch  240/787 | loss: 5.4288 | lr: 3.05e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+  Batch  260/787 | loss: 5.4176 | lr: 3.31e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  280/787 | loss: 5.4094 | lr: 3.56e-05
+  Batch  300/787 | loss: 5.1807 | lr: 3.81e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  320/787 | loss: 5.4268 | lr: 4.07e-05
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  340/787 | loss: 5.4499 | lr: 4.32e-05
+  Batch  360/787 | loss: 5.4651 | lr: 4.58e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  380/787 | loss: 5.4811 | lr: 4.83e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  400/787 | loss: 5.4820 | lr: 5.08e-05
+  Batch  420/787 | loss: 5.4398 | lr: 5.34e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  440/787 | loss: 5.4366 | lr: 5.59e-05
+  Batch  460/787 | loss: 5.4375 | lr: 5.85e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  480/787 | loss: 5.2537 | lr: 6.10e-05
+  Batch  500/787 | loss: 5.4497 | lr: 6.36e-05
+  Batch  520/787 | loss: 5.3235 | lr: 6.61e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  540/787 | loss: 5.4199 | lr: 6.86e-05
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+  Batch  560/787 | loss: 5.3639 | lr: 7.12e-05
+  Batch  580/787 | loss: 5.4025 | lr: 7.37e-05
+  Batch  600/787 | loss: 5.4079 | lr: 7.63e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  620/787 | loss: 5.4602 | lr: 7.88e-05
+  Batch  640/787 | loss: 5.4038 | lr: 8.14e-05
+  Batch  660/787 | loss: 5.4129 | lr: 8.39e-05
+  Batch  680/787 | loss: 5.4313 | lr: 8.64e-05
+  Batch  700/787 | loss: 5.1618 | lr: 8.90e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  720/787 | loss: 5.2450 | lr: 9.15e-05
+  Batch  740/787 | loss: 5.3057 | lr: 9.41e-05
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  760/787 | loss: 5.3443 | lr: 9.66e-05
+  Batch  780/787 | loss: 5.1182 | lr: 9.92e-05
+/Users/harshanand/vscode_files/project_bird/wildlife-audio-project/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+/Users/harshanand/vscode_files/project_bird/wildlife-audio-project/src/train.py:120: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with autocast(enabled=use_amp):
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Train loss: 5.4059  |  Val loss: 5.3417
+  ★ Saved new best model!
+
+── Epoch 2/30 ──
+  Batch    0/787 | loss: 5.3598 | lr: 1.00e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch   20/787 | loss: 5.1224 | lr: 1.03e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch   40/787 | loss: 5.1387 | lr: 1.05e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch   60/787 | loss: 5.3546 | lr: 1.08e-04
+  Batch   80/787 | loss: 5.2488 | lr: 1.10e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  100/787 | loss: 5.3158 | lr: 1.13e-04
+  Batch  120/787 | loss: 5.2521 | lr: 1.15e-04
+  Batch  140/787 | loss: 5.2034 | lr: 1.18e-04
+  Batch  160/787 | loss: 5.3618 | lr: 1.21e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  180/787 | loss: 5.1581 | lr: 1.23e-04
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  200/787 | loss: 5.0072 | lr: 1.26e-04
+  Batch  220/787 | loss: 5.0060 | lr: 1.28e-04
+  Batch  240/787 | loss: 5.1873 | lr: 1.31e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  260/787 | loss: 5.1050 | lr: 1.33e-04
+  Batch  280/787 | loss: 4.9016 | lr: 1.36e-04
+  Batch  300/787 | loss: 5.1631 | lr: 1.38e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  320/787 | loss: 5.1343 | lr: 1.41e-04
+  Batch  340/787 | loss: 4.9745 | lr: 1.43e-04
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  360/787 | loss: 5.2591 | lr: 1.46e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  380/787 | loss: 5.3062 | lr: 1.48e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  400/787 | loss: 5.0290 | lr: 1.51e-04
+  Batch  420/787 | loss: 5.3422 | lr: 1.54e-04
+  Batch  440/787 | loss: 5.0845 | lr: 1.56e-04
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+  Batch  460/787 | loss: 5.0435 | lr: 1.59e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  480/787 | loss: 5.0943 | lr: 1.61e-04
+  Batch  500/787 | loss: 4.7473 | lr: 1.64e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  520/787 | loss: 4.5809 | lr: 1.66e-04
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+  Batch  540/787 | loss: 4.7595 | lr: 1.69e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  560/787 | loss: 4.8855 | lr: 1.71e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  580/787 | loss: 4.8524 | lr: 1.74e-04
+  Batch  600/787 | loss: 4.9905 | lr: 1.76e-04
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  620/787 | loss: 4.8798 | lr: 1.79e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  640/787 | loss: 5.0704 | lr: 1.82e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  660/787 | loss: 4.7622 | lr: 1.84e-04
+  Batch  680/787 | loss: 5.0737 | lr: 1.87e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  700/787 | loss: 5.0750 | lr: 1.89e-04
+[src/libmpg123/layer3.c:INT123_do_layer3():1844] error: dequantization failed!
+  Batch  720/787 | loss: 4.9366 | lr: 1.92e-04
+  Batch  740/787 | loss: 5.2410 | lr: 1.94e-04
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
+  Batch  760/787 | loss: 4.5661 | lr: 1.97e-04
+  Batch  780/787 | loss: 4.7128 | lr: 1.99e-04
+Note: Illegal Audio-MPEG-Header 0x204f6e65 at offset 94285.
+Note: Trying to resync...
+Note: Hit end of (available) data during resync.
+Warning: Xing stream size off by more than 1%, fuzzy seeking may be even more fuzzy than by design!
