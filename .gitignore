@@ -1,11 +1,34 @@
+# Dataset and Models
 data/
+models/*.pth
+models/*.pt
+
+# Python virtual environment
+.venv/
 venv/
-.env
+ENV/
+
+# Python cache
 __pycache__/
 *.pyc
-models/
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Logs and temporary files
+*.log
 .DS_Store
-*.wav
-*.ogg
+
+# Frontend
 frontend/node_modules/
 frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# Audio files (general)
+*.wav
+*.ogg
+*.mp3
+
+# Local secrets
+.env

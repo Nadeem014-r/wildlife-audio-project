@@ -20,8 +20,17 @@ const speciesMap = {
   'bbwduc': { name: 'Black-bellied Whistling-Duck', img: 'https://images.unsplash.com/photo-1549472304-4aff513aedbb?q=80&w=600&auto=format&fit=crop' },
 };
 
-const getSpeciesData = (code) =>
-  speciesMap[code] || { name: code.replace(/[0-9]/g, '').toUpperCase(), img: 'https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=600&auto=format&fit=crop' };
+const getSpeciesData = (pred) => {
+  const code = pred.species;
+  const apiName = pred.common_name;
+  
+  // Use curated image if we have it, otherwise fallback to generic
+  const curated = speciesMap[code];
+  return {
+    name: apiName || curated?.name || code.replace(/[0-9]/g, '').toUpperCase(),
+    img: curated?.img || 'https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=600&auto=format&fit=crop'
+  };
+};
 
 const probBar = {
   hidden: { width: '0%' },
@@ -63,7 +72,7 @@ export default function DetectionResults() {
     ? data.spectrogram_image
     : 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXCJwB1cPMOx_9qG9hRtNqVEH0bc9vGyeY96eCjerKqNSN4vpFJhXLt-dqAogxLhj1vUc5jG-sPHsTzYusQ7DKWifXapGjKIAfrG1NO-IcBDhJtzmvXhqViVyUr52efJClov5O9LlzV88-Ohgw-oGF_EVQBeNXAr-78h3dNjsX5WzupUbjYlznaaIn4BcS27Cg_s5geXaJxUhT9QEwPtCxzTbiJ-5nOeB9HV8X764ZfMnSaml4u9PI9SHNgD6HSTYkTIoZtPZjVaQ';
 
-  const topSpeciesInfo = getSpeciesData(topPrediction.species);
+  const topSpeciesInfo = getSpeciesData(topPrediction);
   const topConfidenceNum = (topPrediction.confidence * 100).toFixed(1);
   const formatConf = (v) => (v * 100).toFixed(1);
 
@@ -172,7 +181,7 @@ export default function DetectionResults() {
             <div className="space-y-5">
               {predictionsArray.slice(0, 5).map((pred, i) => {
                 const conf = formatConf(pred.confidence);
-                const spInfo = getSpeciesData(pred.species);
+                const spInfo = getSpeciesData(pred);
                 const isTop = i === 0;
                 return (
                   <div key={pred.species}>

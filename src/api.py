@@ -12,12 +12,14 @@ import librosa
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.model import BirdClassifier
-from src.dataset import NUM_CLASSES, ID_TO_LABEL, TOP_SPECIES, audio_to_mel_spectrogram, pad_or_truncate_audio
+from src.dataset import NUM_CLASSES, ID_TO_LABEL, TOP_SPECIES, SPECIES_TO_NAME, audio_to_mel_spectrogram, pad_or_truncate_audio
 
 app = FastAPI(title="BirdCLEF Detection API")
 
@@ -67,37 +69,72 @@ async def predict(file: UploadFile = File(...)):
         tmp.write(content)
         tmp.close()
 
-        # 2. Audio Processing Pipeline
+        # 2. Audio Processing Pipeline (Load full audio)
         sr = 32000
-        frames_to_read = int(sr * 5.0)
-        y, orig_sr = sf.read(temp_path, frames=frames_to_read, always_2d=True)
+        # Read full file (no longer limiting to 5s at the start)
+        y, orig_sr = sf.read(temp_path, always_2d=True)
         y = y.mean(axis=1)  # stereo to mono
         if orig_sr != sr:
             y = librosa.resample(y, orig_sr=orig_sr, target_sr=sr)
 
-        y, target_len = pad_or_truncate_audio(y, sr, max_length=5.0)
+        # 3. Sliding Window Prediction
+        window_size = 5.0 # seconds
+        stride = 2.5      # seconds (50% overlap)
+        window_samples = int(window_size * sr)
+        stride_samples = int(stride * sr)
 
-        # Shape: (1, 224, 224)
-        spec = audio_to_mel_spectrogram(y, sr=sr, target_len=target_len)
-        img_b64 = generate_base64_spectrogram(spec)
+        # Pad audio if it's shorter than 5 seconds
+        if len(y) < window_samples:
+            y = np.pad(y, (0, window_samples - len(y)))
 
-        # 3. Model Inference
-        spec_tensor = torch.from_numpy(spec).float().unsqueeze(0).to(device)
+        # Extract windows
+        num_windows = max(1, int((len(y) - window_samples) / stride_samples) + 1)
+        # Limit total windows to prevent timeout/OOM (max ~40 windows = ~100s audio)
+        num_windows = min(num_windows, 40) 
 
-        with torch.no_grad():
-            outputs = model(spec_tensor)
-            probs = torch.sigmoid(outputs).squeeze(0).cpu().numpy()
+        print(f"Analyzing {len(y)/sr:.1f}s audio across {num_windows} windows...")
+
+        all_probs = []
+        last_spec = None
+
+        for i in range(num_windows):
+            start = i * stride_samples
+            end = start + window_samples
+            chunk = y[start:end]
+            
+            # Ensure chunk is exactly window_samples (padding last chunk if needed)
+            if len(chunk) < window_samples:
+                chunk = np.pad(chunk, (0, window_samples - len(chunk)))
+
+            spec = audio_to_mel_spectrogram(chunk, sr=sr, target_len=window_samples)
+            last_spec = spec # Keep the last one for visual display if needed
+            
+            spec_tensor = torch.from_numpy(spec).float().unsqueeze(0).to(device)
+            with torch.no_grad():
+                outputs = model(spec_tensor)
+                probs = torch.softmax(outputs, dim=1).squeeze(0).cpu().numpy()
+                all_probs.append(probs)
+
+        # Aggregate Results (Max-pooling: if a bird is found in ANY window, we count it)
+        aggregated_probs = np.max(all_probs, axis=0)
+        img_b64 = generate_base64_spectrogram(last_spec)
 
         # 4. Build prediction list sorted by confidence
         predictions = [
-            {"species": class_name, "confidence": float(probs[i])}
-            for i, class_name in enumerate(TOP_SPECIES)
+            {
+                "species": class_code, 
+                "common_name": SPECIES_TO_NAME.get(class_code, class_code),
+                "confidence": float(aggregated_probs[i])
+            }
+            for i, class_code in enumerate(TOP_SPECIES)
         ]
         predictions.sort(key=lambda x: x["confidence"], reverse=True)
 
         return {
             "filename": file.filename,
             "status": "success",
+            "duration": f"{len(y)/sr:.1f}s",
+            "windows_analyzed": num_windows,
             "predictions": predictions[:5],
             "spectrogram_image": img_b64,
         }
@@ -110,3 +147,26 @@ async def predict(file: UploadFile = File(...)):
 @app.get("/")
 def health_check():
     return {"status": "online", "model_loaded": os.path.exists("models/best_model.pth")}
+
+
+# ─── Audio Sample Endpoint ────────────────────────────────────────────────────
+TRAIN_AUDIO_DIR = Path("data/combined_birds/audio")
+
+@app.get("/audio-sample/{species_code}")
+def audio_sample(species_code: str):
+    """Serve a sample .ogg audio file for a given species code from the flat audio directory."""
+    # Find all files belonging to this species in the data
+    df = pd.read_csv("data/combined_birds/train.csv")
+    species_files = df[df['primary_label'] == species_code]['filename'].tolist()
+    
+    if not species_files:
+        raise HTTPException(status_code=404, detail=f"No audio found for species: {species_code}")
+    
+    # Use the first available file
+    sample_filename = os.path.basename(species_files[0])
+    file_path = TRAIN_AUDIO_DIR / sample_filename
+    
+    if not file_path.exists():
+         raise HTTPException(status_code=404, detail=f"File not found on disk: {sample_filename}")
+         
+    return FileResponse(file_path, media_type="audio/ogg", filename=f"{species_code}_sample.ogg")

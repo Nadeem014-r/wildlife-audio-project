@@ -1,0 +1,220 @@
+Amazonian Motmot
+American Barn Owl
+Ash-throated Crake
+Ashy-headed Greenlet
+Asian Koel
+Bahia Dwarf Frog
+Bananaquit
+Bare-faced Curassow
+Bare-throated Bellbird
+Barred Antshrike
+Barred Forest-Falcon
+Basin White-lipped Frog
+Black Drongo
+Black Hawk-Eagle
+Black Howling Monkey
+Black-bellied Whistling Duck
+Black-capped Donacobius
+Black-capped Warbling Finch
+Black-collared Hawk
+Black-tailed Marmoset
+Black-tailed Tityra
+Blue-and-yellow Macaw
+Blue-crowned Parakeet
+Bluish-grey Saltator
+Boat-billed Flycatcher
+Brown-bordered Snouted Tree Frog
+Brown-chested Martin
+Brown-crested Flycatcher
+Buff-necked Ibis
+Burrowing Owl
+Campo Flicker
+Cei's White-lipped Frog
+Central Dwarf Frog
+Chaco Chachalaca
+Chaco Tree Frog
+Chalk-browed Mockingbird
+Chestnut-vented Conebill
+Chopi Blackbird
+Cinereous-breasted Spinetail
+Collared Forest-Falcon
+Common Myna
+Common Potoo
+Common Squirrel-Cuckoo
+Common Tailorbird
+Cope's Swamp Froglet
+Coppersmith Barbet
+Creamy-bellied Thrush
+Crested Becard
+Crested Caracara
+Cuyaba Dwarf Frog
+Domestic Dog
+Dwarf Tinamou
+Dwarf Tree Frog
+Euler's Flycatcher
+Fawn-breasted Wren
+Feral Horse
+Ferruginous Pygmy Owl
+Fiery-capped Manakin
+Flavescent Warbler
+Fork-tailed Flycatcher
+Fuscous Flycatcher
+Giant Cicada
+Giant Wood Rail
+Gilded Hummingbird
+Glittering-throated Emerald
+Golden-collared Macaw
+Great Antshrike
+Great Kiskadee
+Great Potoo
+Greater Ani
+Greater Thornbird
+Greater Yellowlegs
+Greenish Elaenia
+Grey-cowled Wood Rail
+Grey-fronted Dove
+Grey-headed Tanager
+Guyalna cuta
+Highland
+Hooded Capuchin
+Horned Screamer
+House Crow
+House Sparrow
+Hyacinth Macaw
+Indian Peafowl
+Indian Robin
+Jaguar
+Large Elaenia
+Lesser Elaenia
+Lesser Grass-Finch
+Lesser Snouted Tree Frog
+Lesser Tree Frog
+Limpkin
+Lineated Woodpecker
+Little Cuckoo
+Little Nightjar
+Magpie Tanager
+Marbled White-lipped Frog
+Maroon-bellied Parakeet
+Masked Gnatcatcher
+Mato Grosso Antbird
+Mato Grosso Snouted Tree Frog
+Milk Frog
+Muller's Termite Frog
+Mustached Frog
+Nacunda Nighthawk
+Nanday Parakeet
+Ocellated Crake
+Olivaceous Woodcreeper
+Orange-backed Troupial
+Orange-winged Amazon
+Osprey
+Pale-breasted Spinetail
+Pale-legged Hornero
+Pale-legged Weeping Frog
+Palm Tanager
+Paraguayan Swimming Frog
+Pauraque
+Pearly-vented Tody-Tyrant
+Pepper Frog
+Peter's Jungle Frog
+Pheasant Cuckoo
+Picazuro Pigeon
+Piratic Flycatcher
+Plain Inezia
+Planalto Slaty Antshrike
+Plumbeous Ibis
+Plush-crested Jay
+Pointedbelly Frog
+Polka-dot Tree Frog
+Prionacris erosa
+Purple Sunbird
+Purplish Jay
+Red Junglefowl
+Red-and-green Macaw
+Red-billed Scythebill
+Red-crested Finch
+Red-legged Seriema
+Red-vented Bulbul
+Red-wattled Lapwing
+Ringed Kingfisher
+Riverbank Warbler
+Roadside Hawk
+Rococo Toad
+Rose-ringed Parakeet
+Rufescent Tiger Heron
+Rufous Cacholote
+Rufous Casiornis
+Rufous Gnateater
+Rufous Hornero
+Rufous Nightjar
+Rufous Treepie
+Rufous-bellied Thrush
+Rufous-fronted Thornbird
+Rufous-tailed Jacamar
+Rusty-fronted Tody-Flycatcher
+Rusty-margined Flycatcher
+Saffron Finch
+Saffron-billed Sparrow
+Sayaca Tanager
+Scale-throated Hermit
+Scaled Dove
+Scaly-headed Parrot
+Sharp-shinned Hawk
+Short-crested Flycatcher
+Short-tailed Nighthawk
+Silver-beaked Tanager
+Small-billed Tinamou
+Smooth-billed Ani
+Snouted Tree Frog
+Social Flycatcher
+Solitary Cacique
+Sooty-fronted Spinetail
+Southern Antpipit
+Southern Beardless Tyrannulet
+Southern Lapwing
+Southern Screamer
+Southern Spectacled Caiman
+Spix's Spinetail
+Spot-backed Antshrike
+Spot-tailed Nightjar
+Straight-billed Woodcreeper
+Striated Heron
+Striped Cuckoo
+Striped Owl
+Swallow-tailed Hummingbird
+Swallow-tailed Manakin
+Tataupa Tinamou
+Thrush-like Wren
+Toco Toucan
+Tropical Kingbird
+Tropical Screech Owl
+Turquoise-fronted Amazon
+Two-colored oval frog
+Undulated Tinamou
+Uruguay Harlequin Frog
+Usina Tree Frog
+Variable Antshrike
+Variable Oriole
+Wattled Jacana
+Waxy Monkey Tree Frog
+Weeping Frog
+Western Fire-eye
+Whistling Grass Frog
+White Woodpecker
+White-bearded Antshrike
+White-browed Warbler
+White-coated Titi
+White-faced Whistling Duck
+White-lored Spinetail
+White-naped Jay
+White-throated Kingfisher
+White-tipped Dove
+White-wedged Piculet
+Wrestler Frog
+Yellow-bellied Elaenia
+Yellow-billed Cardinal
+Yellow-chevroned Parakeet
+Yellow-headed Caracara
+Yellow-olive Flatbill
+Yungas de la Paz Poison Frog

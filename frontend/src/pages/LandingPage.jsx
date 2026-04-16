@@ -20,8 +20,16 @@ const speciesMap = {
   'bbwduc': { name: 'Black-bellied Whistling-Duck', img: 'https://images.unsplash.com/photo-1549472304-4aff513aedbb?q=80&w=600&auto=format&fit=crop' },
 };
 
-const getSpeciesData = (code) =>
-  speciesMap[code] || { name: code.replace(/[0-9]/g, '').toUpperCase(), img: 'https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=600&auto=format&fit=crop' };
+const getSpeciesData = (pred) => {
+  const code = typeof pred === 'string' ? pred : pred.species;
+  const apiName = typeof pred === 'object' ? pred.common_name : null;
+  
+  const curated = speciesMap[code];
+  return {
+    name: apiName || curated?.name || code.replace(/[0-9]/g, '').toUpperCase(),
+    img: curated?.img || 'https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=600&auto=format&fit=crop'
+  };
+};
 
 async function blobToWav(blob) {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -392,7 +400,7 @@ export default function LandingPage() {
                     );
                   }
 
-                  const sp = getSpeciesData(top.species);
+                  const sp = getSpeciesData(top);
                   const confNum = (top.confidence * 100).toFixed(1);
 
                   return (
@@ -492,7 +500,7 @@ export default function LandingPage() {
           {[
             { icon: 'bolt', label: 'AI Detection in Seconds' },
             { icon: 'lock', label: 'Audio Processed Locally' },
-            { icon: 'library_music', label: '24+ Bird Species' },
+            { icon: 'library_music', label: '220+ Bird Species' },
           ].map(({ icon, label }) => (
             <div key={label} className="flex items-center gap-2 font-medium">
               <span className="material-symbols-outlined text-emerald-500 text-base">{icon}</span>
