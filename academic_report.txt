@@ -1,0 +1,112 @@
+====================================================================
+PROJECT EVALUATION REPORT: ORNIS - WILDLIFE AUDIO CLASSIFICATION
+====================================================================
+Evaluator: Professor of Computer Science & Machine Learning
+Experience: 15+ Years Academic Evaluation
+Date: April 2026
+Format: Academic Project Submission 
+====================================================================
+
+1. TITLE AND ABSTRACT
+---------------------
+[Insert Image: Conceptual Overview Diagram - A high-level visual showing a bird, a microphone, and the "Ornis" web application to illustrate the automated acoustic monitoring system's purpose.]
+
+Title: Ornis: A Scalable Bioacoustics Machine Learning Pipeline for Avian Species Identification
+Abstract: 
+Monitoring avian biodiversity is critical for evaluating ecosystem health. Traditional observation methods are labor-intensive and error-prone. This project presents "Ornis", a deep learning-based automated acoustic monitoring system. Utilizing an EfficientNet-B2 convolutional neural network, the system analyzes Mel Spectrogram representations of audio data to classify 220 distinct bird species from a combined dataset of South American and Indian birds. It employs a sliding-window inference technique to maximize detection recall and features a responsive React-based user interface for real-time analysis.
+
+2. PROBLEM STATEMENT & REAL-WORLD RELEVANCE
+---------------------------------------------
+[Insert Image: Field Deployment Photo - An illustration or photo of a remote audio recorder on a tree in a forest, highlighting the manual labor challenges of traditional passive acoustic monitoring.]
+
+The primary challenge in biodiversity conservation is accurately tracking species distributions over vast or inaccessible areas. Avian species are highly vocal, making passive acoustic monitoring (PAM) a viable solution. 
+Relevance:
+- Conservationists require automated tools to parse thousands of hours of field recordings.
+- The project directly addresses the global "BirdCLEF" initiative's goals.
+- Provides an accessible educational tool for ornithologists and citizen scientists to identify birds in real-time via web deployment.
+
+3. DATASET & PREPROCESSING
+--------------------------
+[Insert Image: Audio Preprocessing Flowchart - A sequential diagram showing the data flow: Raw Audio -> Resampling (32kHz) -> Windowing (5s chunks) -> Mel Spectrogram.]
+
+Data Source: The dataset comprises 36,000+ short audio recordings covering 220 species, merged from global ecological datasets.
+Acoustic Preprocessing Flow (Algorithm Explanation):
+1. Resampling: Audio is standardized to a sample rate of 32 kHz.
+2. Windowing: The system chunks continuous audio into 5.0-second intervals.
+3. Feature Extraction: The temporal audio waveform is mathematically transformed into a Mel Spectrogram. 
+
+[Insert Image: Mel Spectrogram Example - A side-by-side comparison of a temporal audio waveform (amplitude over time) and its corresponding 2D Mel Spectrogram image (frequency/power mapped to human hearing) to illustrate feature extraction.]
+
+   - A Mel Spectrogram maps frequency and power over time, scaled to human auditory perception. 
+   - The result is a highly distinct 2D image (shape: 1x224x224) representing the "acoustic fingerprint" of the bird call, optimized for image classification models.
+
+4. MODEL ARCHITECTURE
+---------------------
+[Insert Image: EfficientNet-B2 Architecture Diagram - A structural diagram of the CNN model highlighting the image input (1x224x224), the convolutional feature extraction layers, and pointing to the modified custom dense layer outputting Softmax probabilities for 220 species.]
+
+The core model is based on EfficientNet-B2, a robust CNN (Convolutional Neural Network).
+Why EfficientNet-B2?
+- It provides a mathematically optimal balance of depth, width, and resolution scaling.
+- It achieves higher classification accuracy than legacy models (like standard ResNet) while possessing fewer parameters, making it highly efficient for rapid inference.
+Final Layer Modification: The default classifier head was replaced with a custom dense layer outputting probabilities for 220 classes. The final activation function utilizes Softmax for single-label, mutually exclusive confidence distribution.
+
+5. SYSTEM IMPLEMENTATION (The Infrastructure)
+---------------------------------------------
+Backend (FastAPI & PyTorch):
+
+[Insert Image: Sliding Window Inference Diagram - A visual representation of an audio timeline broken into overlapping 5-second scanner blocks (stride 2.5s) to capture peak vocalization moments across a long file.]
+
+The API manages audio upload and inference. To solve the issue of birds vocalizing sparsely within a long recording, the system implements "Sliding Window Inference":
+- A 5-second scanner slides across the audio with a 50% overlap (stride = 2.5s).
+- Max-Pooling Aggregation: The system aggregates the confidence vectors from all windows and uses a "winner-takes-all" dynamic to capture the absolute peak vocalization moment.
+
+Frontend (React & Vite):
+
+[Insert Image: UI Screenshot - A screenshot of the Ornis React frontend showcasing the drag-and-drop upload area, audio visualization, and the dynamic classification results displaying professional nomenclature.]
+
+A decoupled, component-based user interface allows users to drag-and-drop or record field audio. The interface maps internal classification codes (e.g., "rufgna3") directly to professional nomenclature (e.g., "Rufous-faced Gnatwren") using dynamic metadata indexing.
+
+6. EVALUATION METRICS AND RESULTS
+---------------------------------
+[Insert Image: Performance Graph - A bar chart comparing Top-1 (~58.9%) and Top-5 (~76.7%) classification accuracy metrics to visually convey the model's performance and reliability.]
+
+The model was trained using Cross-Entropy Loss and evaluated on standard classification metrics.
+- Top-1 Accuracy: ~58.9%
+- Top-5 Accuracy: ~76.7%
+Interpretation: While a ~59% absolute accuracy on 220 fine-grained acoustic classes is strong (highly competitive compared to human amateurs), the 77% Top-5 accuracy implies that the model's feature extraction is fundamentally sound, almost always isolating the correct taxonomic neighborhood.
+
+7. CRITICAL WEAKNESSES & LIMITATIONS
+------------------------------------
+[Insert Image: "Cocktail Party Problem" Illustration - A Mel Spectrogram visually showing multiple different bird calls and background noise overlapping in the same timeframe to demonstrate interference.]
+
+As an evaluator, I note the following structural weaknesses:
+1. Multi-Label Limitation: The current Softmax architecture forces the model to choose exactly one bird per 5-second window. In real rainforest environments, multiple species vocalize concurrently (the "cocktail party problem"). 
+2. Class Imbalance: The model was trained without comprehensive synthetic data augmentation (like background noise injection). It may struggle when field recordings contain heavy wind, rain, or passing airplanes.
+3. Hardware Constraint Dependency: While EfficientNet is comparatively light, deep CNN inference over long files (50+ windows) without batch processing creates a linear time bottleneck on CPUs.
+
+8. SUGGESTED IMPROVEMENTS (Future Scope)
+----------------------------------------
+[Insert Image: Future Architecture Flowchart - A conceptual diagram showing proposed improvements: an audio augmentation pipeline (mixing target clips with ambient noise) or the path from PyTorch to ONNX deployment natively in the browser.]
+
+- Shift to Multi-Label Classification: Revert the final layer to BCEWithLogitsLoss (Sigmoid activation) and establish a confidence threshold (e.g., > 0.4) to allow simultaneous multi-species detection.
+- Audio Augmentation Pipeline: During training, dynamically mix target clips with "negative" noise clips (rain, wind, insects) to improve environmental robustness.
+- Export to ONNX/TFLite: Convert the heavy PyTorch weights into ONNX format. This would allow inference to run natively in the user's browser, eliminating backend server costs.
+
+====================================================================
+APPENDIX: VIVA / DEFENSE QUESTIONS & ANSWERS
+====================================================================
+
+Q1. Why did you convert the audio into images (Mel Spectrograms) instead of feeding the raw audio into an RNN or 1D-CNN?
+Answer: Using Mel Spectrograms allows us to leverage pre-trained state-of-the-art vision models like EfficientNet. Decades of research have optimized CNNs to find visual patterns; since animal vocalizations manifest as highly distinct visual shapes on a spectrogram, image classification yields superior feature extraction and faster training convergence than raw waveform analysis.
+
+Q2. Your project uses "Sliding Window Inference." Explain what problem this solves.
+Answer: If a user uploads a 30-second clip and the bird only chirps at the 25-second mark, looking only at the beginning of the file would result in a false negative. The sliding window breaks the file into overlapping 5-second chunks, analyzes each one, and takes the maximum confidence across all chunks. This ensures we detect brief, intermittent calls regardless of where they land in the timeline.
+
+Q3. What is the difference between Top-1 and Top-5 accuracy, and why is Top-5 relevant here?
+Answer: Top-1 means the model's absolute highest confidence guess was correct. Top-5 means the correct species was anywhere within the model's top 5 guesses. In biological taxonomy, calls of geographically adjacent species often sound nearly identical. A high Top-5 accuracy proves the model has successfully narrowed down the acoustic family, which is still highly actionable for a field researcher reviewing the results.
+
+Q4. How did you handle the mapping between raw dataset labels and the frontend display?
+Answer: The audio dataset uses compressed, unreadable codes (like "rufgna3"). To ensure a professional UI, I built a dynamic map in the backend dataset pipeline that parses the `train.csv` metadata, maps the primary label to its full Common Name (e.g., "Rufous-faced Gnatwren"), and transmits this human-readable data asynchronously in the JSON payload of the API.
+
+Q5. How would you scale this application to support real-time 24/7 monitoring in a forest?
+Answer: I would deploy the FastAPI backend on a cloud GPU instance or utilize Edge AI (e.g., a Raspberry Pi with a Coral TPU). To optimize the sliding window approach, I would rewrite the inference loop to process windows in batched tensors rather than sequentially, and implement a threshold logic so the system only invokes the heavy CNN when a basic energy-detector registers a sound anomaly.

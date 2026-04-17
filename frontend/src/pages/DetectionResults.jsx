@@ -126,6 +126,7 @@ export default function DetectionResults() {
                 <img
                   src={topSpeciesInfo.img}
                   alt={topSpeciesInfo.name}
+                  onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=600&auto=format&fit=crop'; }}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
@@ -232,7 +233,7 @@ export default function DetectionResults() {
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-stone-100">
                 <div>
                   <p className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1">Clip Length</p>
-                  <p className="text-sm font-bold text-stone-800">5.0s</p>
+                  <p className="text-sm font-bold text-stone-800">{data?.duration || '5.0s'}</p>
                 </div>
                 <div>
                   <p className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1">Sample Rate</p>

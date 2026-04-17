@@ -9,6 +9,7 @@ import torch
 import numpy as np
 import soundfile as sf
 import librosa
+import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -129,6 +130,9 @@ async def predict(file: UploadFile = File(...)):
             for i, class_code in enumerate(TOP_SPECIES)
         ]
         predictions.sort(key=lambda x: x["confidence"], reverse=True)
+        
+        # Filter low confidence predictions (false positives on human speech/silence)
+        predictions = [p for p in predictions if p["confidence"] >= 0.20]
 
         return {
             "filename": file.filename,

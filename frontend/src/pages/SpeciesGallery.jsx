@@ -131,6 +131,7 @@ export default function SpeciesGallery() {
                   <img
                     src={species.img}
                     alt={species.name}
+                    onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=600&auto=format&fit=crop'; }}
                     className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${
                       playingId !== species.code ? 'grayscale-[30%]' : ''
                     }`}

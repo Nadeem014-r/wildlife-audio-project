@@ -32,7 +32,7 @@ const getSpeciesData = (pred) => {
 };
 
 async function blobToWav(blob) {
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const audioContext = window.liveAudioCtx || new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 32000 });
   const arrayBuffer = await blob.arrayBuffer();
   const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
@@ -150,8 +150,28 @@ export default function LandingPage() {
     try {
       setError(null);
       setPredictionResult(null);
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
+      // Request fixed native sampleRate to prevent downsampling artifacts
+      const audioContextConfig = window.AudioContext || window.webkitAudioContext;
+      if (!window.liveAudioCtx) {
+        window.liveAudioCtx = new audioContextConfig({ sampleRate: 32000 });
+      }
+
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          echoCancellation: false,
+          noiseSuppression: false,
+          autoGainControl: false,
+          channelCount: 1,
+          sampleRate: 32000
+        } 
+      });
+      
+      // Use high bitrate to preserve high frequencies (Opus compression can destroy bird songs)
+      let options = {};
+      if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+        options = { mimeType: 'audio/webm;codecs=opus', audioBitsPerSecond: 256000 };
+      }
+      const mediaRecorder = new MediaRecorder(stream, options);
       mediaRecorderRef.current = mediaRecorder;
       chunksRef.current = [];
 
