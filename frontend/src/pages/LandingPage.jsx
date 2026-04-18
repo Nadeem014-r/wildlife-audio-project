@@ -123,7 +123,8 @@ export default function LandingPage() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('/predict', {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${apiUrl}/predict`, {
         method: 'POST',
         body: formData,
       });

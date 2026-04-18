@@ -50,7 +50,8 @@ export default function SpeciesGallery() {
       setPlayingId(null);
     } else {
       if (playingId) audioRef.current.pause();
-      audioRef.current.src = `/audio-sample/${species.code}`;
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      audioRef.current.src = `${apiUrl}/audio-sample/${species.code}`;
       audioRef.current.play().catch((e) => console.error('Audio playback failed', e));
       setPlayingId(species.code);
     }
